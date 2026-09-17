@@ -4,6 +4,7 @@ import {
   ArrowDown,
   ArrowLeft,
   ArrowRight,
+  Camera,
   ChevronLeft,
   ChevronRight,
   Film,
@@ -26,6 +27,25 @@ const base = import.meta.env.BASE_URL;
 // Fecha de inicio de la relación: 20 de Septiembre de 2025
 const RELATIONSHIP_START = new Date('2025-09-20T00:00:00-03:00');
 
+// Las 51 fotos de aventuras organizadas
+const ALL_PHOTOS = Array.from({ length: 51 }, (_, i) => ({
+  id: i + 1,
+  image: `aventuras/foto${i + 1}.jpeg`,
+  title: `Momento #${String(i + 1).padStart(2, '0')}`,
+  tag: `AVENTURA · ${String(i + 1).padStart(2, '0')}`,
+  caption: 'Uno de los tantos instantes mágicos que construimos juntos en este primer año.',
+}));
+
+// Fotos para el fondo de la portada con transición suave (Ken Burns)
+const HERO_PHOTOS = [
+  'aventuras/foto1.jpeg',
+  'aventuras/foto2.jpeg',
+  'aventuras/foto4.jpeg',
+  'aventuras/foto10.jpeg',
+  'aventuras/foto13.jpeg',
+  'aventuras/foto21.jpeg',
+];
+
 interface Milestone {
   id: string;
   date: string;
@@ -44,13 +64,13 @@ interface VideoMemory {
   tag: string;
 }
 
-interface GalleryItem {
+interface CollageCard {
   id: number;
   image: string;
   title: string;
   place: string;
   hiddenNote: string;
-  aspect?: 'tall' | 'wide' | 'square';
+  aspect: 'tall' | 'square' | 'wide';
 }
 
 interface LoveReason {
@@ -59,6 +79,7 @@ interface LoveReason {
   quote: string;
   highlight: string;
   emoji: string;
+  photo: string;
 }
 
 const MILESTONES: Milestone[] = [
@@ -67,17 +88,17 @@ const MILESTONES: Milestone[] = [
     date: '20 de Septiembre, 2025',
     tag: 'EL INICIO DE TODO',
     title: 'Cuando empezó nuestra historia',
-    description: 'El día en que nuestras vidas se encontraron y todo comenzó a sentirse en el lugar correcto. Desde ese momento, cada día tiene más luz.',
-    image: 'memories/yala.jpeg',
+    description: 'El día en que nuestras vidas se cruzaron y todo empezó a tener sentido. Desde ese momento, cada día tiene más luz.',
+    image: 'aventuras/foto1.jpeg',
     location: 'Jujuy, Argentina',
   },
   {
     id: 'm2',
-    date: 'Nuestra primera foto juntos',
+    date: 'Primeras fotos y miradas',
     tag: 'DONDE HUBO MAGIA',
     title: 'Lagunas de Yala',
     description: 'Esa caminata, el aire fresco, tu sonrisa tímida y esa certeza silenciosa de que quería seguir caminando a tu lado para siempre.',
-    image: 'memories/yala.jpeg',
+    image: 'aventuras/foto2.jpeg',
     location: 'Lagunas de Yala',
   },
   {
@@ -86,7 +107,7 @@ const MILESTONES: Milestone[] = [
     tag: 'AVENTURA DE A DOS',
     title: 'Ruta, mates y Córdoba',
     description: 'Kilómetros de ruta, cantar canciones a todo volumen, cebarnos mates y descubrir que con vos cualquier viaje es el mejor destino.',
-    image: 'memories/cordoba.jpeg',
+    image: 'aventuras/foto3.jpeg',
     location: 'Córdoba',
   },
   {
@@ -95,7 +116,7 @@ const MILESTONES: Milestone[] = [
     tag: 'TU SONRISA',
     title: 'Las flores y tu alegría',
     description: 'Verte sonreír cuando te sorprendo con un ramo es de las cosas más lindas del mundo. Me guardo esa carita feliz en el corazón.',
-    image: 'memories/flores.jpeg',
+    image: 'aventuras/foto5.jpeg',
     location: 'Momentos nuestros',
   },
   {
@@ -103,8 +124,8 @@ const MILESTONES: Milestone[] = [
     date: 'Un logro inolvidable',
     tag: 'ORGULLO TOTAL',
     title: 'Tu título en Hemoterapia',
-    description: 'Verte recibirte, cumplir tus sueños con tanta dedicación y amor por lo que hacés. Te admiro tanto, Flor. Siempre a tu lado.',
-    image: 'memories/hemoterapia.jpeg',
+    description: 'Verte recibirte, cumplir tus metas con tanta dedicación y amor por lo que hacés. Te admiro tanto, Flor. Siempre a tu lado.',
+    image: 'aventuras/foto4.jpeg',
     location: 'Facultad de Medicina',
   },
   {
@@ -113,7 +134,7 @@ const MILESTONES: Milestone[] = [
     tag: 'NUESTROS DÍAS',
     title: 'Pelis, charlas y mates',
     description: 'No necesitamos nada extravagante. Un mate calentito, una peli en el sillón, tu mano en la mía y la calma de estar juntos.',
-    image: 'memories/cine.jpeg',
+    image: 'aventuras/foto7.jpeg',
     location: 'Nuestro rincón favorito',
   },
 ];
@@ -142,64 +163,73 @@ const VIDEO_MEMORIES: VideoMemory[] = [
   },
 ];
 
-const FEATURED_COLLAGE: GalleryItem[] = [
+// Collage destacado con interacción 3D Flip
+const FEATURED_COLLAGE: CollageCard[] = [
   {
     id: 1,
     image: 'aventuras/foto1.jpeg',
-    title: 'Donde empezó la magia',
+    title: 'Nuestra mirada cómplice',
     place: 'Yala',
-    hiddenNote: 'Nuestra primera foto. Si tuviera que volver a ese día, te volvería a mirar exactamente de la misma manera.',
+    hiddenNote: 'Nuestra primera foto juntos. Si volviera al pasado, te volvería a elegir exactamente igual.',
     aspect: 'tall',
   },
   {
     id: 2,
-    image: 'aventuras/foto2.jpeg',
-    title: 'Ruta compartida',
-    place: 'Córdoba',
-    hiddenNote: 'El primer viaje juntos. Descubrí que tu risa en la ruta es mi banda sonora favorita.',
+    image: 'aventuras/foto8.jpeg',
+    title: 'Ruta y mate',
+    place: 'Viaje juntos',
+    hiddenNote: 'Viajar con vos es mi plan favorito. Tu risa en el auto hace que cualquier ruta sea perfecta.',
     aspect: 'square',
   },
   {
     id: 3,
-    image: 'aventuras/foto3.jpeg',
-    title: 'Tu sonrisa radiante',
-    place: 'Sorpresa',
-    hiddenNote: 'Ninguna flor es tan hermosa como la carita que pusiste cuando te las di.',
+    image: 'aventuras/foto12.jpeg',
+    title: 'Tu sonrisa que ilumina',
+    place: 'Paseo',
+    hiddenNote: 'No hay paisaje que se compare con verte sonreír cuando somos solo nosotros.',
     aspect: 'tall',
   },
   {
     id: 4,
-    image: 'aventuras/foto4.jpeg',
-    title: 'Tu gran sueño cumplido',
-    place: 'Graduación',
-    hiddenNote: 'Qué orgullo inmenso verte triunfar. Sos inteligente, dedicada y brillante en todo lo que te proponés.',
+    image: 'aventuras/foto15.jpeg',
+    title: 'De a dos es mejor',
+    place: 'Aventuras',
+    hiddenNote: 'Cada salida tiene una anécdota y cada anécdota tiene tu abrazo de por medio.',
     aspect: 'square',
   },
   {
     id: 5,
-    image: 'aventuras/foto7.jpeg',
-    title: 'Salida de a dos',
-    place: 'Cine & Mimos',
-    hiddenNote: 'Tener tu mano agarrada hace que cualquier instante sea inolvidable.',
+    image: 'aventuras/foto22.jpeg',
+    title: 'La dulzura de estar juntos',
+    place: 'Momentos únicos',
+    hiddenNote: 'Tener tu mano agarrada hace que cualquier día se transforme en el mejor día.',
     aspect: 'wide',
   },
   {
     id: 6,
-    image: 'aventuras/foto10.jpeg',
-    title: 'Complicidad pura',
-    place: 'Juntos',
-    hiddenNote: 'De todas las coincidencias del universo, haberte encontrado a vos es mi más grande fortuna.',
+    image: 'aventuras/foto30.jpeg',
+    title: 'Mi coincidencia favorita',
+    place: 'Nosotros',
+    hiddenNote: 'De todas las personas en el mundo, haberte encontrado a vos es mi más grande fortuna.',
+    aspect: 'tall',
+  },
+  {
+    id: 7,
+    image: 'aventuras/foto35.jpeg',
+    title: 'Amor en cada gesto',
+    place: 'Recuerdos',
+    hiddenNote: 'Me encanta cómo nos cuidamos, cómo nos entendemos con solo mirarnos.',
+    aspect: 'square',
+  },
+  {
+    id: 8,
+    image: 'aventuras/foto41.jpeg',
+    title: 'Un año de felicidad',
+    place: 'Para siempre',
+    hiddenNote: 'Un año que fue apenas el comienzo de todas las cosas hermosas que nos esperan.',
     aspect: 'tall',
   },
 ];
-
-// 51 fotos de aventuras organizadas
-const ALL_ADVENTURE_PHOTOS = Array.from({ length: 51 }, (_, i) => ({
-  id: i + 1,
-  image: `aventuras/foto${i + 1}.jpeg`,
-  title: `Aventura #${String(i + 1).padStart(2, '0')}`,
-  caption: 'Un pedacito de nuestra historia guardado con amor para siempre.',
-}));
 
 const REASONS: LoveReason[] = [
   {
@@ -208,6 +238,7 @@ const REASONS: LoveReason[] = [
     quote: 'Por cómo me mirás cuando te reís con ganas y cómo hacés que cualquier lugar se sienta como en casa.',
     highlight: 'Tu calidez y tu alegría',
     emoji: '✨',
+    photo: 'aventuras/foto9.jpeg',
   },
   {
     id: 2,
@@ -215,6 +246,7 @@ const REASONS: LoveReason[] = [
     quote: 'Por los mates que compartimos, las charlas eternas y la paz inexplicable que me da tener tu abrazo.',
     highlight: 'Nuestros mates y abrazos',
     emoji: '🧉',
+    photo: 'aventuras/foto14.jpeg',
   },
   {
     id: 3,
@@ -222,6 +254,7 @@ const REASONS: LoveReason[] = [
     quote: 'Porque con vos puedo ser completamente yo, sin filtros, sintiéndome querido, respetado y feliz.',
     highlight: 'La libertad de ser nosotros',
     emoji: '🤍',
+    photo: 'aventuras/foto18.jpeg',
   },
   {
     id: 4,
@@ -229,6 +262,7 @@ const REASONS: LoveReason[] = [
     quote: 'Por la forma en que cuidás a los que amás y la pasión que le ponés a tu vocación de salud cada día.',
     highlight: 'Tu corazón noble y generoso',
     emoji: '🌸',
+    photo: 'aventuras/foto4.jpeg',
   },
   {
     id: 5,
@@ -236,6 +270,7 @@ const REASONS: LoveReason[] = [
     quote: 'Te prometo seguir cuidándote, hacerte reír cuando lo necesites y construir a tu lado un futuro lleno de sueños.',
     highlight: 'Elegirte hoy y siempre',
     emoji: '💍',
+    photo: 'aventuras/foto25.jpeg',
   },
   {
     id: 6,
@@ -243,6 +278,7 @@ const REASONS: LoveReason[] = [
     quote: 'Porque te amo hasta la palmera y después al cielo, ida y vuelta... y te volvería a elegir mil vidas más.',
     highlight: 'Un amor infinito',
     emoji: '♾️',
+    photo: 'aventuras/foto50.jpeg',
   },
 ];
 
@@ -292,24 +328,44 @@ export default function Anniversary() {
   const [activeReasonIndex, setActiveReasonIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [heartsTriggered, setHeartsTriggered] = useState(false);
-  
-  // Modal de álbum completo de 50 fotos
+
+  // Slideshow dinámico de fotos en la portada
+  const [heroPhotoIdx, setHeroPhotoIdx] = useState(0);
+
+  // Modal de álbum completo de 51 fotos
   const [albumOpen, setAlbumOpen] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
-  // Estados para los videos
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
-  const [videoMuted, setVideoMuted] = useState(true);
+  // Pasaje de diapositivas interactivo (Slideshow central)
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [isAutoSlide, setIsAutoSlide] = useState(true);
 
   const audioRef = useRef<HTMLAudioElement>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
+  // Actualizar contador cada segundo
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentDate(new Date());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Rotar fotos de fondo en la portada cada 5 segundos
+  useEffect(() => {
+    const heroTimer = setInterval(() => {
+      setHeroPhotoIdx(prev => (prev + 1) % HERO_PHOTOS.length);
+    }, 5000);
+    return () => clearInterval(heroTimer);
+  }, []);
+
+  // Pasaje de fotos automático para el carrusel de aventuras
+  useEffect(() => {
+    if (!isAutoSlide) return;
+    const slideTimer = setInterval(() => {
+      setSlideIndex(prev => (prev + 1) % ALL_PHOTOS.length);
+    }, 3500);
+    return () => clearInterval(slideTimer);
+  }, [isAutoSlide]);
 
   const timeElapsed = calculateElapsedTime(RELATIONSHIP_START, currentDate);
 
@@ -351,15 +407,15 @@ export default function Anniversary() {
   };
 
   const nextPhoto = () => {
-    setCurrentPhotoIndex(prev => (prev + 1) % ALL_ADVENTURE_PHOTOS.length);
+    setCurrentPhotoIndex(prev => (prev + 1) % ALL_PHOTOS.length);
   };
 
   const prevPhoto = () => {
-    setCurrentPhotoIndex(prev => (prev - 1 + ALL_ADVENTURE_PHOTOS.length) % ALL_ADVENTURE_PHOTOS.length);
+    setCurrentPhotoIndex(prev => (prev - 1 + ALL_PHOTOS.length) % ALL_PHOTOS.length);
   };
 
   const whatsappMessage = encodeURIComponent(
-    '¡Mi amor! Me encantó toda la sorpresa de aniversario con nuestros videos y todas las fotos de nuestras aventuras... Gracias por recordar cada detalle, te amo con todo mi corazón ❤️✨'
+    '¡Mi amor! Me encantó toda la sorpresa de aniversario con nuestros videos, el collage y todas nuestras fotos... Gracias por recordar cada detalle, te amo con todo mi corazón ❤️✨'
   );
 
   return (
@@ -395,15 +451,22 @@ export default function Anniversary() {
       />
 
       {/* =========================================================
-          SECCIÓN 1: LA PORTADA (El Impacto Emocional)
+          SECCIÓN 1: LA PORTADA (Ken Burns Slideshow + Impacto Emocional)
       ========================================================= */}
       <section className="section-hero">
         <div className="hero-bg-wrapper">
-          <img
-            src={`${base}aventuras/foto1.jpeg`}
-            alt="Flor y Toti en Yala"
-            className="hero-bg-img"
-          />
+          <AnimatePresence mode="sync">
+            <motion.img
+              key={heroPhotoIdx}
+              src={`${base}${HERO_PHOTOS[heroPhotoIdx]}`}
+              alt="Flor y Toti"
+              className="hero-bg-img"
+              initial={{ opacity: 0, scale: 1.08 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.8, ease: 'easeInOut' }}
+            />
+          </AnimatePresence>
           <div className="hero-overlay-gradient" />
         </div>
 
@@ -413,6 +476,18 @@ export default function Anniversary() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
+          {/* Polaroid Flotante Interactiva de Entrada */}
+          <motion.div
+            className="hero-polaroid-preview"
+            initial={{ opacity: 0, rotate: -6, scale: 0.9 }}
+            animate={{ opacity: 1, rotate: -3, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            onClick={() => openAlbumAt(0)}
+          >
+            <img src={`${base}aventuras/foto1.jpeg`} alt="Flor & Toti" />
+            <span>nuestro primer año ♡</span>
+          </motion.div>
+
           <div className="hero-eyebrow">
             <span className="star-sparkle">✦</span>
             <span>NUESTRA HISTORIA DE AMOR</span>
@@ -426,7 +501,7 @@ export default function Anniversary() {
           </h1>
 
           <p className="hero-subtitle">
-            Un año de miradas cómplices, mates compartidos y la felicidad infinita de elegirte todos los días.
+            Un año de risas, mates compartidos, 51 recuerdos inolvidables y la certeza infinita de elegirte todos los días.
           </p>
 
           {/* Contador en tiempo real ultra-elegante */}
@@ -482,6 +557,24 @@ export default function Anniversary() {
       </section>
 
       {/* =========================================================
+          CINTA CONTINUA DE FOTOS (TICKER FOTOGRÁFICO DE AVENTURAS)
+      ========================================================= */}
+      <div className="photo-tape-ticker" aria-hidden="true">
+        <div className="photo-tape-track">
+          {ALL_PHOTOS.slice(0, 16).map((photo, i) => (
+            <div key={i} className="photo-tape-item" onClick={() => openAlbumAt(i)}>
+              <img src={`${base}${photo.image}`} alt="" loading="lazy" />
+            </div>
+          ))}
+          {ALL_PHOTOS.slice(0, 16).map((photo, i) => (
+            <div key={`dup-${i}`} className="photo-tape-item" onClick={() => openAlbumAt(i)}>
+              <img src={`${base}${photo.image}`} alt="" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* =========================================================
           SECCIÓN 2: LÍNEA DE TIEMPO DE NUESTROS HITOS
       ========================================================= */}
       <section id="linea-de-tiempo" className="section-timeline">
@@ -513,7 +606,7 @@ export default function Anniversary() {
                 </div>
 
                 <div className="timeline-card">
-                  <div className="timeline-card-image-wrap">
+                  <div className="timeline-card-image-wrap" onClick={() => openAlbumAt(index)}>
                     <img
                       src={`${base}${milestone.image}`}
                       alt={milestone.title}
@@ -569,12 +662,10 @@ export default function Anniversary() {
             >
               <div className="video-player-container">
                 <video
-                  ref={(el) => { videoRefs.current[i] = el; }}
                   src={`${base}${vid.videoSrc}`}
                   className="reel-video-element"
                   playsInline
                   loop
-                  muted={videoMuted}
                   controls
                   preload="metadata"
                 />
@@ -590,27 +681,27 @@ export default function Anniversary() {
       </section>
 
       {/* =========================================================
-          SECCIÓN 3: NUESTROS MOMENTOS FAVORITOS (Mosaico 3D & Álbum)
+          SECCIÓN 3: EL MEJOR COLLAGE & PASAJE DE FOTOS (SLIDESHOW LUXE)
       ========================================================= */}
       <section className="section-gallery">
         <div className="section-header-editorial">
           <span className="editorial-tag">CAPÍTULO II</span>
           <h2 className="editorial-title">
-            Instantes que guardo en el <em className="editorial-italic">alma</em>
+            Collage de instantes <em className="editorial-italic">únicos</em>
           </h2>
           <p className="editorial-lead">
-            Tocá cualquier foto destacada para girarla y leer su dedicatoria secreta, o abrí el álbum completo de nuestras 50 aventuras.
+            Tocá cualquier foto para girarla y leer su dedicatoria secreta, o deslizá en el pasaje de fotos.
           </p>
         </div>
 
-        {/* Mosaico interactivo 3D */}
+        {/* Mosaico interactivo 3D con las mejores fotos */}
         <div className="gallery-mosaic-grid">
           {FEATURED_COLLAGE.map((item) => {
             const isFlipped = !!flippedCards[item.id];
             return (
               <div
                 key={item.id}
-                className={`mosaic-card-wrapper aspect-${item.aspect || 'square'}`}
+                className={`mosaic-card-wrapper aspect-${item.aspect}`}
                 onClick={() => toggleCardFlip(item.id)}
               >
                 <div className={`mosaic-card-inner ${isFlipped ? 'is-flipped' : ''}`}>
@@ -646,17 +737,79 @@ export default function Anniversary() {
           })}
         </div>
 
+        {/* Pasaje de fotos cinemático interactivo (Slideshow Showcase) */}
+        <div className="slideshow-showcase-card">
+          <div className="slideshow-header">
+            <div className="slideshow-badge">
+              <Camera size={13} />
+              <span>PASAJE DE FOTOS EN VIVO</span>
+            </div>
+            <span className="slideshow-counter">
+              {slideIndex + 1} de {ALL_PHOTOS.length}
+            </span>
+          </div>
+
+          <div
+            className="slideshow-stage"
+            onMouseEnter={() => setIsAutoSlide(false)}
+            onMouseLeave={() => setIsAutoSlide(true)}
+            onTouchStart={() => setIsAutoSlide(false)}
+            onTouchEnd={() => setIsAutoSlide(true)}
+          >
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={slideIndex}
+                src={`${base}${ALL_PHOTOS[slideIndex].image}`}
+                alt={ALL_PHOTOS[slideIndex].title}
+                className="slideshow-current-img"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.45 }}
+                onClick={() => openAlbumAt(slideIndex)}
+              />
+            </AnimatePresence>
+
+            <button
+              className="slideshow-arrow left-arrow"
+              onClick={() => setSlideIndex(prev => (prev - 1 + ALL_PHOTOS.length) % ALL_PHOTOS.length)}
+              aria-label="Foto anterior"
+            >
+              <ChevronLeft size={22} />
+            </button>
+
+            <button
+              className="slideshow-arrow right-arrow"
+              onClick={() => setSlideIndex(prev => (prev + 1) % ALL_PHOTOS.length)}
+              aria-label="Siguiente foto"
+            >
+              <ChevronRight size={22} />
+            </button>
+          </div>
+
+          <div className="slideshow-footer">
+            <div className="slideshow-caption-box">
+              <h4>{ALL_PHOTOS[slideIndex].title}</h4>
+              <p>{ALL_PHOTOS[slideIndex].caption}</p>
+            </div>
+            <button className="slideshow-expand-btn" onClick={() => openAlbumAt(slideIndex)}>
+              <Maximize2 size={14} />
+              <span>Ver en grande</span>
+            </button>
+          </div>
+        </div>
+
         {/* Botón para abrir el visor completo de las 51 fotos */}
         <div className="album-cta-banner">
           <div className="album-cta-text">
             <ImageIcon size={22} className="album-icon" />
             <div>
-              <h4>Álbum de Nuestras Aventuras</h4>
-              <p>51 fotografías de nuestros viajes, salidas y sonrisas</p>
+              <h4>Álbum Completo de Nuestras 51 Aventuras</h4>
+              <p>Todas nuestras fotos organizadas en alta resolución</p>
             </div>
           </div>
           <button className="open-full-album-btn" onClick={() => openAlbumAt(0)}>
-            <span>Ver Álbum Completo (51)</span>
+            <span>Abrir Álbum (51 Fotos)</span>
             <ArrowRight size={15} />
           </button>
         </div>
@@ -687,6 +840,16 @@ export default function Anniversary() {
                 exit={{ opacity: 0, scale: 0.95, y: -15 }}
                 transition={{ duration: 0.45, ease: 'easeOut' }}
               >
+                {/* Mini foto polaroid temática para cada razón */}
+                <div className="reason-photo-thumb-wrap" onClick={() => openAlbumAt(activeReasonIndex * 8)}>
+                  <img
+                    src={`${base}${REASONS[activeReasonIndex].photo}`}
+                    alt="Recuerdo con Flor"
+                    className="reason-photo-thumb"
+                  />
+                  <span className="reason-photo-heart">♥</span>
+                </div>
+
                 <div className="reason-card-badge">
                   <span className="reason-emoji">{REASONS[activeReasonIndex].emoji}</span>
                   <span className="reason-category">{REASONS[activeReasonIndex].category}</span>
@@ -833,9 +996,9 @@ export default function Anniversary() {
               <div className="album-modal-header">
                 <div className="album-modal-title-box">
                   <span className="album-counter-pill">
-                    {currentPhotoIndex + 1} / {ALL_ADVENTURE_PHOTOS.length}
+                    {currentPhotoIndex + 1} / {ALL_PHOTOS.length}
                   </span>
-                  <h3>{ALL_ADVENTURE_PHOTOS[currentPhotoIndex].title}</h3>
+                  <h3>{ALL_PHOTOS[currentPhotoIndex].title}</h3>
                 </div>
                 <button
                   className="album-close-btn"
@@ -858,8 +1021,8 @@ export default function Anniversary() {
                 <div className="album-photo-frame">
                   <motion.img
                     key={currentPhotoIndex}
-                    src={`${base}${ALL_ADVENTURE_PHOTOS[currentPhotoIndex].image}`}
-                    alt={ALL_ADVENTURE_PHOTOS[currentPhotoIndex].title}
+                    src={`${base}${ALL_PHOTOS[currentPhotoIndex].image}`}
+                    alt={ALL_PHOTOS[currentPhotoIndex].title}
                     className="album-modal-img"
                     initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -879,7 +1042,7 @@ export default function Anniversary() {
 
               {/* Tira de miniaturas deslizable */}
               <div className="album-thumbnails-strip">
-                {ALL_ADVENTURE_PHOTOS.map((photo, idx) => (
+                {ALL_PHOTOS.map((photo, idx) => (
                   <button
                     key={photo.id}
                     className={`thumb-btn ${idx === currentPhotoIndex ? 'is-active' : ''}`}
