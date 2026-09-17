@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flor & Toti • 5 Meses</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <style>
+        @media(prefers-reduced-motion:reduce){ .floating,.animate-bounce{animation:none!important} .reveal{opacity:1!important;transform:none!important;transition:none!important} }
+        :root { --bg: #FAF9F6; --ink: #1A1A1A; --gold: #8C7851; --rose: #D9A0A0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--ink); scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .photo-frame { aspect-ratio: 1/1; object-fit: cover; width: 100%; height: 100%; filter: sepia(0.2); }
+        .music-btn { position: fixed; bottom: 30px; left: 30px; z-index: 1000; }
+        .love-bubble { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .love-bubble:active { transform: scale(0.9); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .floating { animation: float 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Música: Elvis Presley - Can't Help Falling in Love -->
+    <div id="player" style="display:none"></div>
+    <button onclick="toggleMusic()" class="music-btn w-14 h-14 bg-white border border-[var(--gold)] rounded-full shadow-xl flex items-center justify-center transition-all active:scale-90">
+        <span id="music-icon" class="text-xl">🎵</span>
+    </button>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+        <div class="z-10">
+            <span class="mono text-[10px] uppercase tracking-[0.6em] text-[var(--gold)] block mb-8 reveal">Cinco Meses de Nosotros</span>
+            <h1 class="text-7xl md:text-9xl serif italic leading-none mb-6 reveal">Flor & Toti</h1>
+            <div class="w-12 h-px bg-[var(--gold)] mx-auto my-10 opacity-40 reveal"></div>
+            <p class="serif text-2xl italic text-[var(--gold)] reveal">20.09.2025 — 20.02.2026</p>
+        </div>
+        <div class="absolute bottom-12 animate-bounce opacity-20 text-[var(--gold)]">↓</div>
+    </section>
+
+    <!-- Contador Minimalista -->
+    <section class="py-32 px-6 text-center reveal">
+        <h2 class="serif italic text-3xl mb-16">El tiempo a tu lado</h2>
+        <div class="grid grid-cols-4 gap-4 max-w-sm mx-auto">
+            <div>
+                <span id="days" class="serif text-4xl block mb-2">0</span>
+                <span class="mono text-[9px] uppercase tracking-widest opacity-40">Días</span>
+            </div>
+            <div>
+                <span id="hours" class="serif text-4xl block mb-2">0</span>
+                <span class="mono text-[9px] uppercase tracking-widest opacity-40">Horas</span>
+            </div>
+            <div>
+                <span id="mins" class="serif text-4xl block mb-2">0</span>
+                <span class="mono text-[9px] uppercase tracking-widest opacity-40">Min</span>
+            </div>
+            <div>
+                <span id="secs" class="serif text-4xl block mb-2">0</span>
+                <span class="mono text-[9px] uppercase tracking-widest opacity-40">Seg</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Editorial -->
+    <section class="py-32 bg-[var(--ink)] text-[var(--bg)] overflow-hidden">
+        <div class="max-w-md mx-auto px-6 text-center">
+            <h2 class="serif italic text-4xl mb-16 reveal">Nuestra Galería</h2>
+            <div class="relative rounded-[2rem] overflow-hidden shadow-2xl border border-white/10 reveal">
+                <img id="gallery-img" alt="Un recuerdo de Flor y Toti" src="img/foto1.jpeg" class="photo-frame transition-all duration-1000 opacity-0">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div class="absolute bottom-8 left-8 right-8 text-left">
+                    <p class="serif italic text-2xl mb-1">Hermosa mi amor...</p>
+                    <p class="mono text-[10px] uppercase tracking-widest opacity-40">Recuerdo #<span id="photo-num">1</span></p>
+                </div>
+            </div>
+            <div class="flex justify-between items-center mt-12 reveal px-4">
+                <button onclick="changePhoto(-1)" class="serif italic text-lg opacity-60 hover:opacity-100 transition">Anterior</button>
+                <div class="w-12 h-px bg-white/20"></div>
+                <button onclick="changePhoto(1)" class="serif italic text-lg opacity-60 hover:opacity-100 transition">Siguiente</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mensajes Interactivos (Burbujas) -->
+    <section class="py-32 px-6 text-center">
+        <h2 class="serif italic text-3xl mb-16 reveal">Toca para leer</h2>
+        <div class="flex flex-wrap justify-center gap-6 max-w-sm mx-auto reveal">
+            <div onclick="showMsg('Sos lo más lindo que tengo, mi vida.')" class="love-bubble floating bg-white p-6 rounded-full shadow-sm border border-[var(--rose)]">💖</div>
+            <div onclick="showMsg('Te amo de aquí hasta la palmera y al cielo ida y vuelta.')" class="love-bubble floating bg-white p-6 rounded-full shadow-sm border border-[var(--rose)]" style="animation-delay: 1s">🌴</div>
+            <div onclick="showMsg('Gracias por estos 5 meses mágicos.')" class="love-bubble floating bg-white p-6 rounded-full shadow-sm border border-[var(--rose)]" style="animation-delay: 2s">✨</div>
+            <div onclick="showMsg('Sos mi refugio seguro, hermosa mi amor.')" class="love-bubble floating bg-white p-6 rounded-full shadow-sm border border-[var(--rose)]" style="animation-delay: 1.5s">🏠</div>
+        </div>
+        <div id="msg-display" class="mt-16 serif italic text-2xl text-[var(--gold)] min-h-[80px] px-4 transition-all duration-500 opacity-0"></div>
+    </section>
+
+    <!-- Video de Nuestra Canción -->
+    <section class="py-32 bg-white reveal">
+        <div class="max-w-sm mx-auto px-6">
+            <div class="aspect-[9/16] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-[var(--bg)] bg-black">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <p class="text-center mt-12 mono text-[10px] uppercase tracking-[0.4em] opacity-40">Nuestra Canción</p>
+        </div>
+    </section>
+
+    <!-- Carta Final -->
+    <section class="py-40 px-8 max-w-2xl mx-auto text-center reveal">
+        <h2 class="serif italic text-5xl mb-16">Para mi Flor</h2>
+        <div class="space-y-10 text-xl font-light leading-relaxed opacity-80">
+            <p>Desde aquel 20 de septiembre, cada día ha sido un regalo. No somos perfectos, pero lo que tenemos es real, y eso es lo que más valoro.</p>
+            <div class="w-16 h-px bg-[var(--gold)] mx-auto my-12"></div>
+            <p class="serif italic text-3xl text-[var(--gold)]">"Te amo de aquí hasta la palmera y después al cielo ida y vuelta."</p>
+            <p>Gracias por estos 5 meses, por tu paciencia y por tu amor. Sos mi vida entera.</p>
+            <div class="pt-20">
+                <span class="text-4xl block mb-4">❤️</span>
+                <p class="serif italic text-4xl">Toti.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pregunta Final -->
+    <section class="py-32 text-center reveal">
+        <h2 class="serif italic text-3xl mb-16">¿Me amás un poquito?</h2>
+        <div class="flex justify-center items-center gap-8 h-32 relative max-w-xs mx-auto">
+            <button onclick="celebrate()" class="px-12 py-5 bg-[var(--ink)] text-white rounded-full font-bold shadow-2xl active:scale-90 transition z-20">SÍ</button>
+            <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()" class="px-12 py-5 border border-[var(--ink)] rounded-full font-bold transition-all duration-200 z-10">NO</button>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-20 mono text-[9px] tracking-[0.8em] uppercase">
+        Flor & Toti • 2025-2026
+    </footer>
+
+    <script>
+        // --- Contador ---
+        const start = new Date('2025-09-20T00:00:00-03:00');
+        function update() {
+            const diff = new Date() - start;
+            document.getElementById('days').innerText = Math.floor(diff / 86400000);
+            document.getElementById('hours').innerText = Math.floor((diff / 3600000) % 24);
+            document.getElementById('mins').innerText = Math.floor((diff / 60000) % 60);
+            document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
+        }
+        setInterval(update, 1000);
+
+        // --- Música (Elvis Presley) ---
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'vGJTaP6anOU', // Can't Help Falling in Love
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'vGJTaP6anOU' }
+            });
+        }
+        let playing = false;
+        function toggleMusic() {
+            if (!player || typeof player.playVideo !== 'function') return;
+            const icon = document.getElementById('music-icon');
+            if(!playing) { player.playVideo(); icon.innerText = "⏸️"; }
+            else { player.pauseVideo(); icon.innerText = "🎵"; }
+            playing = !playing;
+        }
+
+        // --- Galería ---
+        let current = 1;
+        const total = 30;
+        const exts = ['jpeg', 'jpg', 'png', 'JPEG', 'JPG', 'PNG'];
+        function loadPhoto(num) {
+            const img = document.getElementById('gallery-img');
+            let idx = 0;
+            function tryNext() {
+                if (idx >= exts.length) {
+                    img.src = `https://picsum.photos/seed/love${num}/1000/1000`;
+                    img.style.opacity = 1; return;
+                }
+                const url = `img/foto${num}.${exts[idx]}`;
+                const t = new Image();
+                t.onload = () => { 
+                    img.src = url; img.style.opacity = 1;
+                    document.getElementById('photo-num').innerText = num;
+                };
+                t.onerror = () => { idx++; tryNext(); };
+                t.src = url;
+            }
+            img.style.opacity = 0;
+            setTimeout(tryNext, 300);
+        }
+        function changePhoto(d) {
+            current += d;
+            if (current > total) current = 1;
+            if (current < 1) current = total;
+            loadPhoto(current);
+        }
+
+        // --- Interacciones ---
+        function showMsg(m) {
+            const d = document.getElementById('msg-display');
+            d.style.opacity = 0;
+            setTimeout(() => { d.innerText = m; d.style.opacity = 1; }, 300);
+            if (typeof confetti === 'function') confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 }, colors: ['#D9A0A0', '#8C7851'] });
+        }
+
+        function moveNo() {
+            const b = document.getElementById('no-btn');
+            b.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*160-80}px)`;
+        }
+
+        function celebrate() {
+            if (typeof confetti === 'function') confetti({ particleCount: 200, spread: 90, origin: { y: 0.7 }, colors: ['#D9A0A0', '#8C7851', '#1A1A1A'] });
+            setTimeout(() => alert("¡Yo también te amo muchísimo, hermosa mi amor! ❤️"), 500);
+        }
+
+        // --- Scroll ---
+        const obs = new IntersectionObserver((es) => {
+            es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        window.onload = () => { loadPhoto(1); update(); };
+    </script>
+</body>
+</html>
+

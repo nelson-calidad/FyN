@@ -1,0 +1,1260 @@
+/* ==========================================================================
+   FLOR & TOTI · EXPERIENCIA EDITORIAL DE ANIVERSARIO (MOBILE-FIRST LUXE)
+   ========================================================================== */
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Paleta cromática íntima & cálida */
+  --c-bg: #FAF7F2;
+  --c-bg-subtle: #F3ECE2;
+  --c-paper: #FFFDF9;
+  --c-ink: #1F362D;
+  --c-ink-light: #3D554B;
+  --c-muted: #728178;
+  --c-gold: #B38E5B;
+  --c-gold-light: #DFCAB0;
+  --c-rose: #CE968B;
+  --c-rose-soft: #F9EBE8;
+  --c-border: rgba(31, 54, 45, 0.08);
+  --c-border-gold: rgba(179, 142, 91, 0.25);
+  
+  --shadow-soft: 0 10px 30px rgba(31, 54, 45, 0.06);
+  --shadow-float: 0 16px 40px rgba(31, 54, 45, 0.12);
+  --shadow-glow: 0 0 25px rgba(179, 142, 91, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   GLOBAL APP SHELL & CHAPTER NAVIGATION
+   -------------------------------------------------------------------------- */
+.love-site {
+  background-color: var(--c-bg);
+  min-height: 100vh;
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+}
+
+.skip-link {
+  position: fixed;
+  top: -70px;
+  left: 12px;
+  z-index: 1000;
+  background: #FFFDF9;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--c-ink);
+  box-shadow: var(--shadow-float);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  height: 72px;
+  background: rgba(250, 247, 242, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--c-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--c-ink);
+  letter-spacing: -1.5px;
+}
+
+.wordmark > span {
+  font-style: italic;
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--c-gold);
+}
+
+.wordmark .wordmark-dot {
+  color: var(--c-gold);
+}
+
+.chapter-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border: 1px solid var(--c-border-gold);
+  border-radius: 999px;
+  background: rgba(255, 253, 249, 0.7);
+}
+
+.chapter-nav a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.chapter-nav a:hover {
+  color: var(--c-ink);
+}
+
+.chapter-nav a[aria-current='page'] {
+  background: var(--c-ink);
+  color: #FFFDF9;
+  box-shadow: 0 4px 14px rgba(31, 54, 45, 0.15);
+}
+
+.nav-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--c-gold-light);
+  border-radius: 50%;
+}
+
+.header-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--c-muted);
+}
+
+.months-frame {
+  width: 100%;
+  height: calc(100vh - 72px);
+  border: none;
+  background: var(--c-bg);
+}
+
+.loading-chapter {
+  padding: 60px 20px;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--c-muted);
+  font-size: 16px;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    height: 62px;
+    padding: 0 12px;
+  }
+  .wordmark {
+    font-size: 22px;
+  }
+  .chapter-nav a {
+    padding: 6px 9px;
+    font-size: 10px;
+    gap: 4px;
+  }
+  .header-note {
+    display: none;
+  }
+  .months-frame {
+    height: calc(100vh - 62px);
+  }
+}
+
+.anniversary-story {
+  background-color: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 90px;
+}
+
+/* --------------------------------------------------------------------------
+   REPRODUCTOR FLOTANTE MINIMALISTA (FLOATING MUSIC PILL)
+   -------------------------------------------------------------------------- */
+.floating-music-pill {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 90;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.music-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 253, 249, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--c-border-gold);
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: var(--c-ink);
+  font-size: 11px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(31, 54, 45, 0.08);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.music-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 253, 249, 0.98);
+  box-shadow: var(--shadow-float);
+}
+
+.music-btn.is-active {
+  background: var(--c-ink);
+  color: #FFFDF9;
+  border-color: var(--c-ink);
+}
+
+.music-btn .song-title {
+  font-size: 10px;
+  letter-spacing: 0.3px;
+}
+
+/* Animación de barras de ecualizador */
+.equalizer-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 12px;
+}
+
+.equalizer-bars .bar {
+  width: 2.5px;
+  background-color: var(--c-gold);
+  border-radius: 2px;
+  animation: equalize 1s infinite alternate ease-in-out;
+}
+
+.music-btn.is-active .equalizer-bars .bar {
+  background-color: var(--c-gold-light);
+}
+
+.bar-1 { height: 40%; animation-delay: 0s; }
+.bar-2 { height: 100%; animation-delay: 0.25s; }
+.bar-3 { height: 65%; animation-delay: 0.45s; }
+
+@keyframes equalize {
+  0% { height: 20%; }
+  100% { height: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   SECCIÓN 1: LA PORTADA (HERO EMOCIONAL FULL-BLEED)
+   -------------------------------------------------------------------------- */
+.section-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 100px 20px 45px;
+  overflow: hidden;
+}
+
+.hero-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.85) contrast(1.05);
+}
+
+.hero-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 38, 32, 0.45) 0%,
+    rgba(22, 38, 32, 0.65) 45%,
+    rgba(250, 247, 242, 0.96) 88%,
+    rgba(250, 247, 242, 1) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  color: var(--c-gold-light);
+  text-transform: uppercase;
+  background: rgba(31, 54, 45, 0.4);
+  padding: 5px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(223, 202, 176, 0.3);
+  margin-bottom: 16px;
+}
+
+.star-sparkle {
+  color: var(--c-gold);
+  font-size: 11px;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 8.8vw, 48px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #FFFDF9;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+.hero-title-italic {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--c-gold-light);
+  display: block;
+}
+
+.hero-subtitle {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 253, 249, 0.88);
+  max-width: 380px;
+  margin: 0 auto 28px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Contador dinámico */
+.hero-counter-box {
+  width: 100%;
+  background: rgba(255, 253, 249, 0.94);
+  border: 1px solid var(--c-border-gold);
+  border-radius: 20px;
+  padding: 18px 14px 14px;
+  box-shadow: 0 14px 35px rgba(22, 38, 32, 0.15);
+  backdrop-filter: blur(12px);
+  margin-bottom: 24px;
+}
+
+.counter-label {
+  display: block;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--c-gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.counter-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 38px;
+}
+
+.counter-num {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--c-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter-num.highlight-sec {
+  color: var(--c-rose);
+}
+
+.counter-unit {
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: var(--c-muted);
+  margin-top: 4px;
+}
+
+.counter-divider {
+  font-size: 16px;
+  color: var(--c-gold-light);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.counter-footer-text {
+  font-size: 10px;
+  color: var(--c-muted);
+  font-style: italic;
+  margin-top: 12px;
+  border-top: 1px solid rgba(31, 54, 45, 0.06);
+  padding-top: 8px;
+}
+
+.hero-scroll-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--c-ink);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.hero-scroll-btn:hover {
+  background: rgba(31, 54, 45, 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   ESTRUCTURA EDITORIAL COMÚN DE SECCIONES
+   -------------------------------------------------------------------------- */
+.section-header-editorial {
+  text-align: center;
+  padding: 65px 20px 30px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.editorial-tag {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  color: var(--c-gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.editorial-title {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 6.8vw, 34px);
+  font-weight: 400;
+  color: var(--c-ink);
+  line-height: 1.25;
+  margin: 0 0 10px;
+  letter-spacing: -0.4px;
+}
+
+.editorial-italic {
+  font-style: italic;
+  color: var(--c-rose);
+  font-weight: 400;
+}
+
+.editorial-lead {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-muted);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   SECCIÓN 2: LÍNEA DE TIEMPO DE NUESTROS HITOS
+   -------------------------------------------------------------------------- */
+.section-timeline {
+  position: relative;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+.timeline-container {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline-vertical-spine {
+  position: absolute;
+  top: 15px;
+  bottom: 25px;
+  left: 10px;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--c-gold) 0%,
+    rgba(179, 142, 91, 0.3) 50%,
+    rgba(206, 150, 139, 0.4) 100%
+  );
+  border-radius: 2px;
+}
+
+.timeline-nodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-dot-marker {
+  position: absolute;
+  left: -28px;
+  top: 22px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--c-bg);
+  border: 2px solid var(--c-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow: 0 0 10px rgba(179, 142, 91, 0.3);
+}
+
+.timeline-dot-marker .dot-inner {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-gold);
+}
+
+.timeline-card {
+  background: var(--c-paper);
+  border: 1px solid var(--c-border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-card:active {
+  transform: scale(0.99);
+}
+
+.timeline-card-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: var(--c-bg-subtle);
+}
+
+.timeline-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.timeline-location-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(22, 38, 32, 0.7);
+  backdrop-filter: blur(6px);
+  color: #FFFDF9;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.timeline-card-body {
+  padding: 18px 16px;
+}
+
+.timeline-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.timeline-tag {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: var(--c-gold);
+}
+
+.timeline-date {
+  font-size: 10px;
+  color: var(--c-muted);
+}
+
+.timeline-card-title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--c-ink);
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.timeline-card-desc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-ink-light);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   SECCIÓN 3: NUESTROS MOMENTOS FAVORITOS (MOSAICO INTERACTIVO 3D)
+   -------------------------------------------------------------------------- */
+.section-gallery {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+.gallery-mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.mosaic-card-wrapper {
+  perspective: 1000px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.mosaic-card-wrapper.aspect-tall {
+  height: 250px;
+}
+
+.mosaic-card-wrapper.aspect-square {
+  height: 190px;
+}
+
+.mosaic-card-wrapper.aspect-wide {
+  grid-column: 1 / -1;
+  height: 180px;
+}
+
+.mosaic-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.mosaic-card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.mosaic-card-front,
+.mosaic-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.mosaic-card-front {
+  background: var(--c-bg-subtle);
+  border: 1px solid var(--c-border);
+}
+
+.mosaic-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.mosaic-front-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(22, 38, 32, 0.88) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px;
+  color: #FFFDF9;
+}
+
+.mosaic-place {
+  font-size: 8px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--c-gold-light);
+}
+
+.mosaic-title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 2px 0 4px;
+  line-height: 1.25;
+}
+
+.mosaic-flip-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8px;
+  color: rgba(255, 253, 249, 0.75);
+}
+
+/* Dorso íntimo */
+.mosaic-card-back {
+  background: var(--c-paper);
+  border: 1px solid var(--c-border-gold);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: inset 0 0 20px rgba(179, 142, 91, 0.05);
+}
+
+.mosaic-back-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-heart-icon {
+  color: var(--c-rose);
+}
+
+.back-tag {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+.back-note {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--c-ink);
+  margin: 0;
+}
+
+.back-return-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8px;
+  color: var(--c-muted);
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   SECCIÓN 4: "LO QUE AMO DE TI" (CARRUSEL INTERACTIVO)
+   -------------------------------------------------------------------------- */
+.section-reasons {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 16px 45px;
+}
+
+.reasons-carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reasons-card-deck {
+  width: 100%;
+  min-height: 250px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reason-interactive-card {
+  width: 100%;
+  background: var(--c-paper);
+  border: 1px solid var(--c-border-gold);
+  border-radius: 22px;
+  padding: 30px 22px 22px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reason-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c-rose-soft);
+  border: 1px solid rgba(206, 150, 139, 0.3);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.reason-emoji {
+  font-size: 13px;
+}
+
+.reason-category {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--c-terracotta);
+}
+
+.reason-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(17px, 4.8vw, 21px);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--c-ink);
+  margin: 0 0 18px;
+  min-height: 60px;
+}
+
+.reason-highlight-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--c-ink-light);
+  background: var(--c-bg-subtle);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.highlight-heart {
+  color: var(--c-rose);
+  fill: var(--c-rose);
+}
+
+.reason-counter-footer {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--c-muted);
+}
+
+.reasons-nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+  width: 100%;
+}
+
+.carousel-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--c-paper);
+  border: 1px solid var(--c-border);
+  color: var(--c-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(31, 54, 45, 0.05);
+  transition: all 0.2s ease;
+}
+
+.carousel-btn:hover {
+  background: var(--c-ink);
+  color: #FFFDF9;
+  border-color: var(--c-ink);
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--c-border-gold);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.dot-indicator.active {
+  width: 20px;
+  background: var(--c-gold);
+}
+
+/* --------------------------------------------------------------------------
+   SECCIÓN 5: EL CIERRE (CARTA, CANCIÓN & WHATSAPP)
+   -------------------------------------------------------------------------- */
+.section-letter-closing {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 16px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.letter-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.letter-wax-seal {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #B94A48 0%, #8C2D2B 100%);
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 6px 18px rgba(140, 45, 43, 0.35);
+}
+
+.seal-heart {
+  color: #FFF;
+  fill: #FFF;
+}
+
+.letter-inner-paper {
+  background: var(--c-paper);
+  border: 1px solid var(--c-border-gold);
+  border-radius: 20px;
+  padding: 44px 22px 30px;
+  box-shadow: var(--shadow-float);
+  position: relative;
+}
+
+.letter-date-heading {
+  display: block;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-gold);
+  margin-bottom: 12px;
+}
+
+.letter-recipient {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--c-ink);
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.letter-paragraphs p {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--c-ink-light);
+  margin: 0 0 14px;
+}
+
+.letter-blockquote {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--c-ink);
+  border-left: 2px solid var(--c-gold);
+  padding-left: 14px;
+  margin: 18px 0;
+}
+
+.letter-signature-block {
+  text-align: right;
+  margin-top: 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--c-border);
+}
+
+.letter-closing-word {
+  display: block;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--c-muted);
+}
+
+.letter-sign-name {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-style: italic;
+  color: var(--c-gold);
+  margin-top: 2px;
+}
+
+/* Reproductor Final Integrado */
+.final-song-player-card {
+  width: 100%;
+  background: var(--c-ink);
+  color: #FFFDF9;
+  border-radius: 18px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-float);
+  margin-bottom: 24px;
+}
+
+.song-card-artwork {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+}
+
+.spinning-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #1a1a1a 0 2px, #2b2b2b 3px, #1a1a1a 4px);
+  border: 2px solid rgba(223, 202, 176, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spinRecord 10s linear infinite;
+  animation-play-state: paused;
+}
+
+.spinning-disc.is-playing {
+  animation-play-state: running;
+}
+
+.disc-center {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--c-rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+}
+
+.song-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-tagline {
+  display: block;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: var(--c-gold-light);
+  text-transform: uppercase;
+}
+
+.song-name {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 500;
+  margin: 1px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-artist {
+  font-size: 10px;
+  color: rgba(255, 253, 249, 0.7);
+  margin: 0;
+}
+
+.song-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--c-gold);
+  color: #FFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.song-toggle-btn:hover {
+  transform: scale(1.08);
+  background: #C49E69;
+}
+
+/* Botón interactivo de WhatsApp */
+.final-cta-container {
+  width: 100%;
+  text-align: center;
+}
+
+.whatsapp-love-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, #25D366 0%, #1EAA52 100%);
+  color: #FFF;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 16px 20px;
+  border-radius: 999px;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.2px;
+}
+
+.whatsapp-love-btn:hover,
+.whatsapp-love-btn:active {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(37, 211, 102, 0.45);
+}
+
+.final-confidential-note {
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--c-muted);
+  margin-top: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   PARTÍCULAS FESTIVAS FLOTANTES
+   -------------------------------------------------------------------------- */
+.floating-hearts-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.rising-heart {
+  position: absolute;
+  bottom: -30px;
+  color: var(--c-rose);
+  animation: riseUp 3.2s ease-out forwards;
+}
+
+.rising-heart:nth-child(even) {
+  color: var(--c-gold);
+}
+
+@keyframes riseUp {
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.2) rotate(60deg);
+    opacity: 0;
+  }
+}
+
+@keyframes spinRecord {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ACCESIBILIDAD & REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .spinning-disc,
+  .equalizer-bars .bar,
+  .rising-heart,
+  .mosaic-card-inner {
+    animation: none !important;
+    transition: none !important;
+  }
+}
