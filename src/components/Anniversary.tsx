@@ -89,16 +89,16 @@ const MILESTONES: Milestone[] = [
     tag: 'EL INICIO DE TODO',
     title: 'Cuando empezó nuestra historia',
     description: 'El día en que nuestras vidas se cruzaron y todo empezó a tener sentido. Desde ese momento, cada día tiene más luz.',
-    image: 'aventuras/foto1.jpeg',
+    image: 'memories/yala.jpeg',
     location: 'Jujuy, Argentina',
   },
   {
     id: 'm2',
-    date: 'Primeras fotos y miradas',
+    date: 'Nuestra primera foto juntos',
     tag: 'DONDE HUBO MAGIA',
     title: 'Lagunas de Yala',
     description: 'Esa caminata, el aire fresco, tu sonrisa tímida y esa certeza silenciosa de que quería seguir caminando a tu lado para siempre.',
-    image: 'aventuras/foto2.jpeg',
+    image: 'memories/yala.jpeg',
     location: 'Lagunas de Yala',
   },
   {
@@ -107,7 +107,7 @@ const MILESTONES: Milestone[] = [
     tag: 'AVENTURA DE A DOS',
     title: 'Ruta, mates y Córdoba',
     description: 'Kilómetros de ruta, cantar canciones a todo volumen, cebarnos mates y descubrir que con vos cualquier viaje es el mejor destino.',
-    image: 'aventuras/foto3.jpeg',
+    image: 'memories/cordoba.jpeg',
     location: 'Córdoba',
   },
   {
@@ -116,7 +116,7 @@ const MILESTONES: Milestone[] = [
     tag: 'TU SONRISA',
     title: 'Las flores y tu alegría',
     description: 'Verte sonreír cuando te sorprendo con un ramo es de las cosas más lindas del mundo. Me guardo esa carita feliz en el corazón.',
-    image: 'aventuras/foto5.jpeg',
+    image: 'memories/flores.jpeg',
     location: 'Momentos nuestros',
   },
   {
@@ -125,7 +125,7 @@ const MILESTONES: Milestone[] = [
     tag: 'ORGULLO TOTAL',
     title: 'Tu título en Hemoterapia',
     description: 'Verte recibirte, cumplir tus metas con tanta dedicación y amor por lo que hacés. Te admiro tanto, Flor. Siempre a tu lado.',
-    image: 'aventuras/foto4.jpeg',
+    image: 'memories/hemoterapia.jpeg',
     location: 'Facultad de Medicina',
   },
   {
@@ -134,7 +134,7 @@ const MILESTONES: Milestone[] = [
     tag: 'NUESTROS DÍAS',
     title: 'Pelis, charlas y mates',
     description: 'No necesitamos nada extravagante. Un mate calentito, una peli en el sillón, tu mano en la mía y la calma de estar juntos.',
-    image: 'aventuras/foto7.jpeg',
+    image: 'memories/cine.jpeg',
     location: 'Nuestro rincón favorito',
   },
 ];
