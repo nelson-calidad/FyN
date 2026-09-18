@@ -11,17 +11,13 @@ import {
   Heart,
   Image as ImageIcon,
   Infinity as InfinityIcon,
-  Maximize,
   Maximize2,
   MessageCircle,
-  Minimize,
-  MonitorPlay,
   Music2,
   Pause,
   Play,
   RotateCw,
   Sparkles,
-  Tv,
   Volume2,
   VolumeX,
   X,
@@ -344,17 +340,6 @@ export default function Anniversary() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isAutoSlide, setIsAutoSlide] = useState(true);
 
-  // -------------------------------------------------------------
-  // MODO TELEVISIÓN / CINE EN PANTALLA COMPLETA
-  // -------------------------------------------------------------
-  const [tvMode, setTvMode] = useState(false);
-  const [tvActiveTab, setTvActiveTab] = useState<'photos' | 'videos'>('photos');
-  const [tvPhotoIndex, setTvPhotoIndex] = useState(0);
-  const [tvVideoIndex, setTvVideoIndex] = useState(0);
-  const [tvIsPlaying, setTvIsPlaying] = useState(true);
-  const [tvControlsVisible, setTvControlsVisible] = useState(true);
-  const [tvFullscreen, setTvFullscreen] = useState(false);
-
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Actualizar contador cada segundo
@@ -382,69 +367,6 @@ export default function Anniversary() {
     return () => clearInterval(slideTimer);
   }, [isAutoSlide]);
 
-  // Auto-avance en Modo TV cada 5.5 segundos
-  useEffect(() => {
-    if (!tvMode || !tvIsPlaying || tvActiveTab !== 'photos') return;
-    const tvTimer = setInterval(() => {
-      setTvPhotoIndex(prev => (prev + 1) % ALL_PHOTOS.length);
-    }, 5500);
-    return () => clearInterval(tvTimer);
-  }, [tvMode, tvIsPlaying, tvActiveTab]);
-
-  // Ocultar controles de TV automáticamente tras 3.8 segundos de inactividad
-  useEffect(() => {
-    if (!tvMode) return;
-    let timer: NodeJS.Timeout;
-    const handleActivity = () => {
-      setTvControlsVisible(true);
-      clearTimeout(timer);
-      timer = setTimeout(() => setTvControlsVisible(false), 3800);
-    };
-
-    window.addEventListener('mousemove', handleActivity);
-    window.addEventListener('keydown', handleActivity);
-    window.addEventListener('touchstart', handleActivity);
-    timer = setTimeout(() => setTvControlsVisible(false), 3800);
-
-    return () => {
-      window.removeEventListener('mousemove', handleActivity);
-      window.removeEventListener('keydown', handleActivity);
-      window.removeEventListener('touchstart', handleActivity);
-      clearTimeout(timer);
-    };
-  }, [tvMode]);
-
-  // Control con teclado y control remoto de Smart TV
-  useEffect(() => {
-    if (!tvMode) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        closeTvMode();
-      } else if (e.key === ' ' || e.code === 'Space') {
-        e.preventDefault();
-        setTvIsPlaying(p => !p);
-      } else if (e.key === 'ArrowRight') {
-        if (tvActiveTab === 'photos') {
-          setTvPhotoIndex(p => (p + 1) % ALL_PHOTOS.length);
-        } else {
-          setTvVideoIndex(p => (p + 1) % VIDEO_MEMORIES.length);
-        }
-      } else if (e.key === 'ArrowLeft') {
-        if (tvActiveTab === 'photos') {
-          setTvPhotoIndex(p => (p - 1 + ALL_PHOTOS.length) % ALL_PHOTOS.length);
-        } else {
-          setTvVideoIndex(p => (p - 1 + VIDEO_MEMORIES.length) % VIDEO_MEMORIES.length);
-        }
-      } else if (e.key.toLowerCase() === 'f') {
-        toggleFullscreen();
-      } else if (e.key.toLowerCase() === 'm') {
-        toggleMusic();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [tvMode, tvActiveTab, isPlaying]);
-
   const timeElapsed = calculateElapsedTime(RELATIONSHIP_START, currentDate);
 
   const toggleMusic = async () => {
@@ -459,50 +381,6 @@ export default function Anniversary() {
       } catch (err) {
         console.error('Audio play error:', err);
       }
-    }
-  };
-
-  const openTvMode = async () => {
-    setTvMode(true);
-    setTvIsPlaying(true);
-    setTvControlsVisible(true);
-    try {
-      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-        setTvFullscreen(true);
-      }
-    } catch {
-      // Ignorar restricciones si el navegador no permite fullscreen inmediato
-    }
-    if (audioRef.current && !isPlaying) {
-      try {
-        await audioRef.current.play();
-        setIsPlaying(true);
-      } catch (e) {
-        console.warn('Audio auto-play prevented:', e);
-      }
-    }
-  };
-
-  const closeTvMode = () => {
-    setTvMode(false);
-    if (document.fullscreenElement && document.exitFullscreen) {
-      document.exitFullscreen().catch(() => {});
-    }
-    setTvFullscreen(false);
-  };
-
-  const toggleFullscreen = async () => {
-    try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-        setTvFullscreen(true);
-      } else {
-        await document.exitFullscreen();
-        setTvFullscreen(false);
-      }
-    } catch (err) {
-      console.warn(err);
     }
   };
 
@@ -542,19 +420,8 @@ export default function Anniversary() {
 
   return (
     <div className="anniversary-story">
-      {/* Barra Flotante de Control (Modo TV + Música) */}
-      <div className="floating-top-controls">
-        <button
-          onClick={openTvMode}
-          className="tv-pill-btn"
-          aria-label="Reproducir en la Tele o Pantalla Completa"
-          title="Reproducir en la Tele / Modo Cine"
-        >
-          <Tv size={15} />
-          <span>Modo TV / Cine</span>
-          <Sparkles size={12} className="tv-sparkle" />
-        </button>
-
+      {/* Reproductor Flotante Minimalista */}
+      <div className="floating-music-pill">
         <button
           onClick={toggleMusic}
           className={`music-btn ${isPlaying ? 'is-active' : ''}`}
@@ -569,7 +436,7 @@ export default function Anniversary() {
           ) : (
             <Music2 size={16} />
           )}
-          <span className="song-title">La Correcta</span>
+          <span className="song-title">La Correcta · Morat</span>
           {isPlaying ? <Pause size={14} /> : <Play size={14} />}
         </button>
       </div>
@@ -674,29 +541,11 @@ export default function Anniversary() {
             <p className="counter-footer-text">amándote y construyendo nuestro propio universo.</p>
           </div>
 
-          {/* Botón Principal para reproducir en la Tele / Pantalla Completa */}
-          <div className="hero-cta-actions">
-            <button
-              className="hero-tv-launch-btn"
-              onClick={openTvMode}
-              title="Abrir en pantalla completa para reproducir en la televisión"
-            >
-              <div className="hero-tv-icon-circle">
-                <Tv size={20} />
-              </div>
-              <div className="hero-tv-btn-text">
-                <span className="hero-tv-tag">EXPERIENCIA SMART TV</span>
-                <span className="hero-tv-title">Reproducir en la Tele · Modo Cine</span>
-              </div>
-              <Sparkles size={18} className="hero-tv-sparkle" />
-            </button>
-          </div>
-
           <button
             className="hero-scroll-btn"
             onClick={() => document.getElementById('linea-de-tiempo')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <span>O deslizá para revivirlo acá</span>
+            <span>Deslizá para revivirlo</span>
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
@@ -1208,233 +1057,7 @@ export default function Anniversary() {
         )}
       </AnimatePresence>
 
-      {/* =========================================================
-          EXPERIENCIA MODO TV / CINE EN PANTALLA COMPLETA
-      ========================================================= */}
-      <AnimatePresence>
-        {tvMode && (
-          <motion.div
-            className="tv-cinema-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {/* Fondo ambiental dinámico de luz tipo Ambilight / Smart TV */}
-            <div
-              className="tv-ambient-bg"
-              style={{
-                backgroundImage: `url(${base}${
-                  tvActiveTab === 'photos'
-                    ? ALL_PHOTOS[tvPhotoIndex].image
-                    : 'aventuras/foto1.jpeg'
-                })`,
-              }}
-            />
 
-            {/* Barra superior de control en la tele */}
-            <motion.header
-              className="tv-top-bar"
-              animate={{
-                opacity: tvControlsVisible ? 1 : 0,
-                y: tvControlsVisible ? 0 : -25,
-                pointerEvents: tvControlsVisible ? 'auto' : 'none',
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="tv-brand-box">
-                <span className="tv-logo">f&t</span>
-                <div className="tv-brand-info">
-                  <span className="tv-brand-title">FLOR & TOTI · NUESTRA HISTORIA</span>
-                  <span className="tv-counter-inline">
-                    {timeElapsed.years}a {timeElapsed.months}m {timeElapsed.days}d {String(timeElapsed.hours).padStart(2, '0')}:{String(timeElapsed.minutes).padStart(2, '0')}:{String(timeElapsed.seconds).padStart(2, '0')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Selector de fotos o videos */}
-              <div className="tv-tab-switch">
-                <button
-                  className={`tv-tab-btn ${tvActiveTab === 'photos' ? 'is-active' : ''}`}
-                  onClick={() => setTvActiveTab('photos')}
-                >
-                  <Camera size={14} />
-                  <span>51 Fotos ({tvPhotoIndex + 1}/51)</span>
-                </button>
-                <button
-                  className={`tv-tab-btn ${tvActiveTab === 'videos' ? 'is-active' : ''}`}
-                  onClick={() => setTvActiveTab('videos')}
-                >
-                  <Film size={14} />
-                  <span>3 Videos</span>
-                </button>
-              </div>
-
-              {/* Controles de utilidades */}
-              <div className="tv-actions-right">
-                <button
-                  onClick={toggleMusic}
-                  className={`tv-util-btn ${isPlaying ? 'is-music-on' : ''}`}
-                  title={isPlaying ? 'Pausar música (M)' : 'Reproducir música (M)'}
-                >
-                  <Music2 size={15} />
-                  <span>{isPlaying ? 'Música ♪' : 'Sin Música'}</span>
-                </button>
-
-                <button
-                  onClick={toggleFullscreen}
-                  className="tv-util-btn"
-                  title="Pantalla Completa (F)"
-                >
-                  {tvFullscreen ? <Minimize size={15} /> : <Maximize size={15} />}
-                </button>
-
-                <button
-                  onClick={closeTvMode}
-                  className="tv-close-btn"
-                  title="Salir de Modo TV (Esc)"
-                >
-                  <X size={18} />
-                  <span>Salir</span>
-                </button>
-              </div>
-            </motion.header>
-
-            {/* Escenario central de reproducción */}
-            <main className="tv-stage">
-              {tvActiveTab === 'photos' ? (
-                <div className="tv-photo-container">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={tvPhotoIndex}
-                      className="tv-photo-frame"
-                      initial={{ opacity: 0, scale: 0.97 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.02 }}
-                      transition={{ duration: 0.6, ease: 'easeInOut' }}
-                    >
-                      <img
-                        src={`${base}${ALL_PHOTOS[tvPhotoIndex].image}`}
-                        alt={ALL_PHOTOS[tvPhotoIndex].title}
-                        className="tv-main-img"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* Flechas de navegación para TV / Remoto */}
-                  <button
-                    className={`tv-side-arrow left ${tvControlsVisible ? 'is-visible' : ''}`}
-                    onClick={() => setTvPhotoIndex(p => (p - 1 + ALL_PHOTOS.length) % ALL_PHOTOS.length)}
-                    aria-label="Foto anterior"
-                  >
-                    <ChevronLeft size={42} />
-                  </button>
-                  <button
-                    className={`tv-side-arrow right ${tvControlsVisible ? 'is-visible' : ''}`}
-                    onClick={() => setTvPhotoIndex(p => (p + 1) % ALL_PHOTOS.length)}
-                    aria-label="Siguiente foto"
-                  >
-                    <ChevronRight size={42} />
-                  </button>
-                </div>
-              ) : (
-                /* Tab de Videos en la Tele */
-                <div className="tv-video-experience">
-                  <div className="tv-video-player-box">
-                    <video
-                      key={tvVideoIndex}
-                      src={`${base}${VIDEO_MEMORIES[tvVideoIndex].videoSrc}`}
-                      controls
-                      autoPlay
-                      loop
-                      playsInline
-                      className="tv-video-element"
-                    />
-                  </div>
-                  <div className="tv-video-selector">
-                    {VIDEO_MEMORIES.map((v, i) => (
-                      <button
-                        key={v.id}
-                        className={`tv-video-pill ${i === tvVideoIndex ? 'is-active' : ''}`}
-                        onClick={() => setTvVideoIndex(i)}
-                      >
-                        <Film size={14} />
-                        <span>{v.title}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </main>
-
-            {/* Barra inferior con dedicatoria y controles de reproducción */}
-            {tvActiveTab === 'photos' && (
-              <motion.footer
-                className="tv-bottom-bar"
-                animate={{
-                  opacity: tvControlsVisible ? 1 : 0,
-                  y: tvControlsVisible ? 0 : 25,
-                  pointerEvents: tvControlsVisible ? 'auto' : 'none',
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="tv-info-left">
-                  <span className="tv-tagline">
-                    {ALL_PHOTOS[tvPhotoIndex].tag}
-                  </span>
-                  <h2 className="tv-title">{ALL_PHOTOS[tvPhotoIndex].title}</h2>
-                  <p className="tv-desc">{ALL_PHOTOS[tvPhotoIndex].caption}</p>
-                </div>
-
-                {/* Controles de reproducción centrales */}
-                <div className="tv-playback-center">
-                  <button
-                    className="tv-ctrl-btn"
-                    onClick={() => setTvPhotoIndex(p => (p - 1 + ALL_PHOTOS.length) % ALL_PHOTOS.length)}
-                    title="Anterior (←)"
-                  >
-                    <ChevronLeft size={22} />
-                  </button>
-
-                  <button
-                    className="tv-play-btn"
-                    onClick={() => setTvIsPlaying(p => !p)}
-                    title={tvIsPlaying ? 'Pausar (Espacio)' : 'Reproducir (Espacio)'}
-                  >
-                    {tvIsPlaying ? <Pause size={20} /> : <Play size={20} style={{ marginLeft: 2 }} />}
-                  </button>
-
-                  <button
-                    className="tv-ctrl-btn"
-                    onClick={() => setTvPhotoIndex(p => (p + 1) % ALL_PHOTOS.length)}
-                    title="Siguiente (→)"
-                  >
-                    <ChevronRight size={22} />
-                  </button>
-                </div>
-
-                {/* Atajos para TV */}
-                <div className="tv-hints-right">
-                  <span className="tv-hint-chip">Espacio: Pausar</span>
-                  <span className="tv-hint-chip">← / →: Pasar</span>
-                  <span className="tv-hint-chip">F: Pantalla</span>
-                </div>
-
-                {/* Barra de progreso de la diapositiva actual */}
-                {tvIsPlaying && (
-                  <motion.div
-                    key={tvPhotoIndex}
-                    className="tv-slide-progress-bar"
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 5.5, ease: 'linear' }}
-                  />
-                )}
-              </motion.footer>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Lluvia de corazones festiva */}
       {heartsTriggered && (
