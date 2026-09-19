@@ -7,23 +7,27 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Paleta cromática íntima & cálida */
+  /* Paleta cromática íntima & cálida con toques verde agua favoritos de Flor */
   --c-bg: #FAF7F2;
-  --c-bg-subtle: #F3ECE2;
+  --c-bg-subtle: #F0F5F3;
   --c-paper: #FFFDF9;
   --c-ink: #1F362D;
-  --c-ink-light: #3D554B;
-  --c-muted: #728178;
+  --c-ink-light: #315347;
+  --c-muted: #647E73;
+  --c-aqua: #4E9B8A;
+  --c-aqua-light: #C4E2DA;
+  --c-aqua-soft: #E9F4F1;
   --c-gold: #B38E5B;
   --c-gold-light: #DFCAB0;
   --c-rose: #CE968B;
   --c-rose-soft: #F9EBE8;
-  --c-border: rgba(31, 54, 45, 0.08);
+  --c-border: rgba(49, 83, 71, 0.1);
   --c-border-gold: rgba(179, 142, 91, 0.25);
+  --c-border-aqua: rgba(78, 155, 138, 0.3);
   
   --shadow-soft: 0 10px 30px rgba(31, 54, 45, 0.06);
   --shadow-float: 0 16px 40px rgba(31, 54, 45, 0.12);
-  --shadow-glow: 0 0 25px rgba(179, 142, 91, 0.2);
+  --shadow-glow: 0 0 25px rgba(78, 155, 138, 0.25);
 }
 
 /* --------------------------------------------------------------------------
@@ -60,16 +64,16 @@
   top: 0;
   z-index: 80;
   height: 72px;
-  background: rgba(250, 247, 242, 0.88);
+  background: rgba(250, 247, 242, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--c-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0 32px;
+  width: 100%;
+  margin: 0;
 }
 
 .wordmark {
@@ -269,6 +273,7 @@
 .section-hero {
   position: relative;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -827,11 +832,11 @@
 .reason-interactive-card {
   width: 100%;
   background: var(--c-paper);
-  border: 1px solid var(--c-border-gold);
+  border: 1px solid var(--c-border-aqua);
   border-radius: 22px;
   padding: 30px 22px 22px;
   text-align: center;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 10px 30px rgba(78, 155, 138, 0.08);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -842,8 +847,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--c-rose-soft);
-  border: 1px solid rgba(206, 150, 139, 0.3);
+  background: var(--c-aqua-soft);
+  border: 1px solid var(--c-border-aqua);
   padding: 4px 12px;
   border-radius: 999px;
   margin-bottom: 16px;
@@ -858,7 +863,7 @@
   font-weight: 700;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: var(--c-terracotta);
+  color: var(--c-aqua);
 }
 
 .reason-quote {
@@ -877,16 +882,17 @@
   gap: 6px;
   font-size: 11px;
   font-weight: 600;
-  color: var(--c-ink-light);
-  background: var(--c-bg-subtle);
+  color: var(--c-ink);
+  background: var(--c-aqua-soft);
+  border: 1px solid var(--c-border-aqua);
   padding: 6px 14px;
   border-radius: 999px;
   margin-bottom: 12px;
 }
 
 .highlight-heart {
-  color: var(--c-rose);
-  fill: var(--c-rose);
+  color: var(--c-aqua);
+  fill: var(--c-aqua);
 }
 
 .reason-counter-footer {
@@ -1819,11 +1825,12 @@
    DISEÑO MODERNO Y RESPONSIVO PARA PANTALLAS GRANDES Y SMART TV
    ========================================================================== */
 @media (min-width: 900px) {
-  /* PORTADA / HERO EN WIDESCREEN & TV */
+  /* PORTADA / HERO EN WIDESCREEN & TV (ANCHO COMPLETO) */
   .section-hero {
-    padding: 130px 40px 65px;
-    max-width: 1000px;
-    margin: 0 auto;
+    padding: 110px 48px 50px;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
     align-items: center;
   }
 

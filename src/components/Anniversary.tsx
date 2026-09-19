@@ -309,13 +309,83 @@ const ALL_PHOTOS = [
     tag: 'ANDÉN DE VOLCÁN',
     caption: 'Abrazados junto al cartel histórico de Volcán, un punto de partida para una gran aventura juntos.',
   },
-  ...Array.from({ length: 11 }, (_, i) => ({
-    id: i + 41,
-    image: `aventuras/foto${i + 41}.jpeg`,
-    title: `Aventura #${String(i + 41).padStart(2, '0')}`,
-    tag: `AVENTURA · ${String(i + 41).padStart(2, '0')}`,
-    caption: 'Uno de los tantos instantes mágicos que construimos juntos en este primer año.',
-  })),
+  {
+    id: 41,
+    image: 'aventuras/foto41.jpeg',
+    title: 'Paseo por la iglesia histórica',
+    tag: 'QUEBRADA MÁGICA',
+    caption: 'Mates y sol frente a la iglesia colonial con los cerros y palmeras de fondo, disfrutando cada pueblito de Jujuy.',
+  },
+  {
+    id: 42,
+    image: 'aventuras/foto42.jpeg',
+    title: 'Noche de peña y baile',
+    tag: 'FIESTA & LUCES',
+    caption: 'Abrazados de la mano bajo las luces de colores y banderines, compartiendo la alegría y la música que nos une.',
+  },
+  {
+    id: 43,
+    image: 'aventuras/foto43.jpeg',
+    title: 'La belleza de lo cotidiano',
+    tag: 'EN CASA',
+    caption: 'Una selfie sencilla en casa, sonriendo con el alma y disfrutando el regalo más grande: tenernos.',
+  },
+  {
+    id: 44,
+    image: 'aventuras/foto44.jpeg',
+    title: 'Carnaval con pintura y harina',
+    tag: 'CARNAVAL JUJEÑO',
+    caption: 'Llenos de pintura, espuma y harina festejando el carnaval a pura risa y baile con el piluso.',
+  },
+  {
+    id: 45,
+    image: 'aventuras/foto45.jpeg',
+    title: 'Carnaval en la Quebrada',
+    tag: 'ALEGRÍA CARNAVALERA',
+    caption: 'En medio de la multitud y la fiesta quebradiza con la cara pintada y el sol bien arriba. Una fiesta inolvidable.',
+  },
+  {
+    id: 46,
+    image: 'aventuras/foto46.jpeg',
+    title: 'Beso carnavalero',
+    tag: 'NOCHE DE FIESTA',
+    caption: 'Un beso tierno en medio del baile y la música del carnaval, con el termo y el piluso puestos.',
+  },
+  {
+    id: 47,
+    image: 'aventuras/foto47.jpeg',
+    title: 'Ramo de girasoles para Flor',
+    tag: 'DETALLE DE AMOR',
+    caption: 'Ver tu sonrisa iluminada con ese ramo hermoso de girasoles. Verte sonreír así es mi felicidad absoluta.',
+  },
+  {
+    id: 48,
+    image: 'aventuras/foto48.jpeg',
+    title: 'Noche en las fuentes de agua',
+    tag: 'LUCES & AGUA',
+    caption: 'Sentados junto a las aguas danzantes iluminadas en la noche, disfrutando la calma y nuestro paseo.',
+  },
+  {
+    id: 49,
+    image: 'aventuras/foto49.jpeg',
+    title: 'Flor con sus flores',
+    tag: 'RADIANTE',
+    caption: 'Parada en el caminito de piedra, hermosa de pies a cabeza con su ramo en mano y esa sonrisa que enamora.',
+  },
+  {
+    id: 50,
+    image: 'aventuras/foto50.jpeg',
+    title: 'Abrazo en el puente',
+    tag: 'VISTA PANORÁMICA',
+    caption: 'En el puente peatonal con la ciudad de fondo, abrazados bajo el cielo azul inmenso.',
+  },
+  {
+    id: 51,
+    image: 'aventuras/foto51.jpeg',
+    title: 'Río de montaña y relax',
+    tag: 'AGUAS CRISTALINAS',
+    caption: 'Refrescándonos en las aguas transparentes del río entre las piedras con un trago en mano y sol pleno. La gloria misma.',
+  },
 ];
 
 // Fotos para el fondo de la portada con transición suave (Ken Burns)
@@ -367,21 +437,12 @@ interface LoveReason {
 const MILESTONES: Milestone[] = [
   {
     id: 'm1',
-    date: '20 de Septiembre, 2025',
+    date: 'Antes de ser novios',
     tag: 'EL INICIO DE TODO',
-    title: 'Cuando empezó nuestra historia',
-    description: 'El día en que nuestras vidas se cruzaron y todo empezó a tener sentido. Desde ese momento, cada día tiene más luz.',
+    title: 'Cuando nos íbamos conociendo',
+    description: 'Nuestra primera foto juntos. Todavía no éramos novios, recién nos íbamos conociendo y compartiendo las primeras charlas. Desde ese día todo empezó a cambiar para mejor.',
     image: 'memories/yala.jpeg',
-    location: 'Jujuy, Argentina',
-  },
-  {
-    id: 'm2',
-    date: 'Nuestra primera foto juntos',
-    tag: 'DONDE HUBO MAGIA',
-    title: 'Lagunas de Yala',
-    description: 'Esa caminata, el aire fresco, tu sonrisa tímida y esa certeza silenciosa de que quería seguir caminando a tu lado para siempre.',
-    image: 'memories/yala.jpeg',
-    location: 'Lagunas de Yala',
+    location: 'Lagunas de Yala, Jujuy',
   },
   {
     id: 'm3',
@@ -517,50 +578,50 @@ const REASONS: LoveReason[] = [
   {
     id: 1,
     category: 'Razón',
-    quote: 'Por cómo me mirás cuando te reís con ganas y cómo hacés que cualquier lugar se sienta como en casa.',
-    highlight: 'Tu calidez y tu alegría',
-    emoji: '✨',
-    photo: 'aventuras/foto9.jpeg',
+    quote: 'Por tu risa hermosa que ilumina todo, por las tardes de juegos de mesa y porque amo con el alma cada vez que jugamos juntos.',
+    highlight: 'Tu risa tan linda y nuestros juegos',
+    emoji: '🎲',
+    photo: 'aventuras/foto47.jpeg',
   },
   {
     id: 2,
     category: 'Detalle',
-    quote: 'Por los mates que compartimos, las charlas eternas y la paz inexplicable que me da tener tu abrazo.',
-    highlight: 'Nuestros mates y abrazos',
-    emoji: '🧉',
-    photo: 'aventuras/foto14.jpeg',
+    quote: 'Por tu amor por las pastas y ese tono verde agua tan tuyo. Te gusta cuidarte con la comida, pero conmigo te sumás y me acompañás en absolutamente todo.',
+    highlight: 'Tu dulzura y tu compañía incondicional',
+    emoji: '🍝',
+    photo: 'aventuras/foto25.jpeg',
   },
   {
     id: 3,
-    category: 'Razón',
-    quote: 'Porque con vos puedo ser completamente yo, sin filtros, sintiéndome querido, respetado y feliz.',
-    highlight: 'La libertad de ser nosotros',
+    category: 'Promesa',
+    quote: 'Aunque a veces nos enojemos o te quedes callada cuando discutimos, siempre lo hablamos con el corazón, lo superamos y salimos más unidos que nunca.',
+    highlight: 'Superar cada obstáculo juntos',
     emoji: '🤍',
-    photo: 'aventuras/foto18.jpeg',
+    photo: 'aventuras/foto22.jpeg',
   },
   {
     id: 4,
     category: 'Recuerdo',
-    quote: 'Por la forma en que cuidás a los que amás y la pasión que le ponés a tu vocación de salud cada día.',
-    highlight: 'Tu corazón noble y generoso',
-    emoji: '🌸',
-    photo: 'aventuras/foto4.jpeg',
+    quote: 'Nuestra primera foto en Yala cuando recién nos íbamos conociendo y todavía no éramos novios. Ya en ese momento supe que eras la indicada.',
+    highlight: 'Aquel primer día en Yala',
+    emoji: '✨',
+    photo: 'memories/yala.jpeg',
   },
   {
     id: 5,
     category: 'Promesa',
-    quote: 'Te prometo seguir cuidándote, hacerte reír cuando lo necesites y construir a tu lado un futuro lleno de sueños.',
-    highlight: 'Elegirte hoy y siempre',
+    quote: 'Sos la persona más hermosa del mundo, por dentro y por fuera. Mi sueño más grande es seguir caminando a tu lado y compartir muchísimo tiempo con vos.',
+    highlight: 'Querer una vida entera juntos',
     emoji: '💍',
-    photo: 'aventuras/foto25.jpeg',
+    photo: 'aventuras/foto50.jpeg',
   },
   {
     id: 6,
     category: 'Razón',
-    quote: 'Porque te amo hasta la palmera y después al cielo, ida y vuelta... y te volvería a elegir mil vidas más.',
+    quote: 'Porque te amo hasta la palmera y después al cielo, ida y vuelta... y te volvería a elegir en cada una de mis vidas.',
     highlight: 'Un amor infinito',
     emoji: '♾️',
-    photo: 'aventuras/foto50.jpeg',
+    photo: 'aventuras/foto51.jpeg',
   },
 ];
 
@@ -663,6 +724,25 @@ export default function Anniversary() {
       } catch (err) {
         console.error('Audio play error:', err);
       }
+    }
+  };
+
+  const wasMusicPlayingBeforeVideoRef = useRef(false);
+
+  const handleVideoPlay = () => {
+    if (audioRef.current && !audioRef.current.paused) {
+      wasMusicPlayingBeforeVideoRef.current = true;
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleVideoPauseOrEnded = () => {
+    if (wasMusicPlayingBeforeVideoRef.current && audioRef.current) {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        wasMusicPlayingBeforeVideoRef.current = false;
+      }).catch(err => console.error('Error reanudando audio:', err));
     }
   };
 
@@ -857,117 +937,11 @@ export default function Anniversary() {
       </div>
 
       {/* =========================================================
-          SECCIÓN 2: LÍNEA DE TIEMPO DE NUESTROS HITOS
-      ========================================================= */}
-      <section id="linea-de-tiempo" className="section-timeline">
-        <div className="section-header-editorial">
-          <span className="editorial-tag">CAPÍTULO I</span>
-          <h2 className="editorial-title">
-            Nuestros hitos <em className="editorial-italic">inolvidables</em>
-          </h2>
-          <p className="editorial-lead">
-            Los pasos que fuimos dando juntos, desde aquel primer día hasta este hermoso presente.
-          </p>
-        </div>
-
-        <div className="timeline-container">
-          <div className="timeline-vertical-spine" />
-
-          <div className="timeline-nodes-list">
-            {MILESTONES.map((milestone, index) => (
-              <motion.article
-                key={milestone.id}
-                className="timeline-item"
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.7, delay: index * 0.1 }}
-              >
-                <div className="timeline-dot-marker">
-                  <span className="dot-inner" />
-                </div>
-
-                <div className="timeline-card">
-                  <div className="timeline-card-image-wrap" onClick={() => openAlbumAt(index)}>
-                    <img
-                      src={`${base}${milestone.image}`}
-                      alt={milestone.title}
-                      className="timeline-card-img"
-                      loading="lazy"
-                    />
-                    {milestone.location && (
-                      <span className="timeline-location-badge">📍 {milestone.location}</span>
-                    )}
-                  </div>
-
-                  <div className="timeline-card-body">
-                    <div className="timeline-card-meta">
-                      <span className="timeline-tag">{milestone.tag}</span>
-                      <span className="timeline-date">{milestone.date}</span>
-                    </div>
-                    <h3 className="timeline-card-title">{milestone.title}</h3>
-                    <p className="timeline-card-desc">{milestone.description}</p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          SECCIÓN ESPECIAL: NUESTROS REELS EN VIDEO (MOMENTOS VIVOS)
-      ========================================================= */}
-      <section className="section-video-reels">
-        <div className="section-header-editorial">
-          <span className="editorial-tag">
-            <Film size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
-            VIDEOS & AVENTURAS
-          </span>
-          <h2 className="editorial-title">
-            Momentos en <em className="editorial-italic">movimiento</em>
-          </h2>
-          <p className="editorial-lead">
-            Nuestras risas, gestos y recuerdos grabados en vivo para volver a vivirlos una y otra vez.
-          </p>
-        </div>
-
-        <div className="video-reels-grid">
-          {VIDEO_MEMORIES.map((vid, i) => (
-            <motion.div
-              key={vid.id}
-              className="video-reel-card"
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-            >
-              <div className="video-player-container">
-                <video
-                  src={`${base}${vid.videoSrc}`}
-                  className="reel-video-element"
-                  playsInline
-                  loop
-                  controls
-                  preload="metadata"
-                />
-              </div>
-              <div className="video-reel-info">
-                <span className="video-reel-tag">{vid.tag}</span>
-                <h3 className="video-reel-title">{vid.title}</h3>
-                <p className="video-reel-desc">{vid.caption}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* =========================================================
-          SECCIÓN 3: EL MEJOR COLLAGE & PASAJE DE FOTOS (SLIDESHOW LUXE)
+          SECCIÓN 2: EL MEJOR COLLAGE & PASAJE DE FOTOS (SLIDESHOW LUXE)
       ========================================================= */}
       <section className="section-gallery">
         <div className="section-header-editorial">
-          <span className="editorial-tag">CAPÍTULO II</span>
+          <span className="editorial-tag">CAPÍTULO I</span>
           <h2 className="editorial-title">
             Collage de instantes <em className="editorial-italic">únicos</em>
           </h2>
@@ -1094,6 +1068,115 @@ export default function Anniversary() {
             <span>Abrir Álbum (51 Fotos)</span>
             <ArrowRight size={15} />
           </button>
+        </div>
+      </section>
+
+      {/* =========================================================
+          SECCIÓN 3: NUESTROS REELS EN VIDEO (MOMENTOS VIVOS)
+      ========================================================= */}
+      <section className="section-video-reels">
+        <div className="section-header-editorial">
+          <span className="editorial-tag">
+            <Film size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
+            VIDEOS & AVENTURAS
+          </span>
+          <h2 className="editorial-title">
+            Momentos en <em className="editorial-italic">movimiento</em>
+          </h2>
+          <p className="editorial-lead">
+            Nuestras risas, gestos y recuerdos grabados en vivo para volver a vivirlos una y otra vez.
+          </p>
+        </div>
+
+        <div className="video-reels-grid">
+          {VIDEO_MEMORIES.map((vid, i) => (
+            <motion.div
+              key={vid.id}
+              className="video-reel-card"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.15 }}
+            >
+              <div className="video-player-container">
+                <video
+                  src={`${base}${vid.videoSrc}`}
+                  className="reel-video-element"
+                  playsInline
+                  loop
+                  controls
+                  preload="metadata"
+                  onPlay={handleVideoPlay}
+                  onPause={handleVideoPauseOrEnded}
+                  onEnded={handleVideoPauseOrEnded}
+                />
+              </div>
+              <div className="video-reel-info">
+                <span className="video-reel-tag">{vid.tag}</span>
+                <h3 className="video-reel-title">{vid.title}</h3>
+                <p className="video-reel-desc">{vid.caption}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* =========================================================
+          SECCIÓN 4: LÍNEA DE TIEMPO DE NUESTROS HITOS
+      ========================================================= */}
+      <section id="linea-de-tiempo" className="section-timeline">
+        <div className="section-header-editorial">
+          <span className="editorial-tag">CAPÍTULO II</span>
+          <h2 className="editorial-title">
+            Nuestros hitos <em className="editorial-italic">inolvidables</em>
+          </h2>
+          <p className="editorial-lead">
+            Los pasos que fuimos dando juntos, desde aquel primer día en Yala hasta este hermoso presente.
+          </p>
+        </div>
+
+        <div className="timeline-container">
+          <div className="timeline-vertical-spine" />
+
+          <div className="timeline-nodes-list">
+            {MILESTONES.map((milestone, index) => (
+              <motion.article
+                key={milestone.id}
+                className="timeline-item"
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+              >
+                <div className="timeline-dot-marker">
+                  <span className="dot-inner" />
+                </div>
+
+                <div className="timeline-card">
+                  <div className="timeline-card-image-wrap" onClick={() => openAlbumAt(index)}>
+                    <img
+                      src={`${base}${milestone.image}`}
+                      alt={milestone.title}
+                      className="timeline-card-img"
+                      loading="lazy"
+                    />
+                    {milestone.location && (
+                      <span className="timeline-location-badge">📍 {milestone.location}</span>
+                    )}
+                  </div>
+
+                  <div className="timeline-card-body">
+                    <div className="timeline-card-meta">
+                      <span className="timeline-tag">{milestone.tag}</span>
+                      <span className="timeline-date">{milestone.date}</span>
+                    </div>
+                    <h3 className="timeline-card-title">{milestone.title}</h3>
+                    <p className="timeline-card-desc">{milestone.description}</p>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 
