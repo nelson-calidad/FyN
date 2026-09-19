@@ -5,10 +5,14 @@ import {
   ArrowLeft,
   ArrowRight,
   Camera,
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  Dices,
   Film,
+  Gift,
   Heart,
+  HelpCircle,
   Image as ImageIcon,
   Infinity as InfinityIcon,
   Maximize2,
@@ -18,6 +22,7 @@ import {
   Play,
   RotateCw,
   Sparkles,
+  Trophy,
   Volume2,
   VolumeX,
   X,
@@ -179,9 +184,9 @@ const ALL_PHOTOS = [
   {
     id: 22,
     image: 'aventuras/foto22.jpeg',
-    title: 'Termas de Reyes con frío y neblina',
-    tag: 'TERMAS DE REYES',
-    caption: 'Hacía muchísimo frío y estaba todo con neblina, pero fue hermoso. Nos recordó a la segunda vez que nos vimos, que el clima estuvo igual de mágico.',
+    title: 'Cuesta de Lipán',
+    tag: 'CAMINO A LAS SALINAS',
+    caption: 'Yendo a las Salinas Grandes por las curvas de la Cuesta de Lipán. Subiendo entre los cerros con un sol hermoso y nosotros dos disfrutando el viaje.',
   },
   {
     id: 23,
@@ -193,9 +198,9 @@ const ALL_PHOTOS = [
   {
     id: 24,
     image: 'aventuras/foto24.jpeg',
-    title: 'Neblina en Reyes',
+    title: 'Termas de Reyes con frío y neblina',
     tag: 'TERMAS DE REYES',
-    caption: 'Bien abrigados entre las nubes y el frío de Reyes, disfrutando el paseo y la complicidad de los dos.',
+    caption: 'Hacía muchísimo frío y estaba todo con neblina, pero fue re lindo. Nos acordamos de la segunda vez que nos vimos, que estuvo así también.',
   },
   {
     id: 25,
@@ -418,11 +423,30 @@ interface VideoMemory {
 
 interface CollageCard {
   id: number;
+  photoIndex: number;
   image: string;
   title: string;
   place: string;
   hiddenNote: string;
   aspect: 'tall' | 'square' | 'wide';
+}
+
+interface TriviaQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+interface LoveCoupon {
+  id: number;
+  icon: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  terms: string;
+  whatsappText: string;
 }
 
 interface LoveReason {
@@ -506,71 +530,151 @@ const VIDEO_MEMORIES: VideoMemory[] = [
   },
 ];
 
-// Collage destacado con interacción 3D Flip
-const FEATURED_COLLAGE: CollageCard[] = [
+// Las 51 fotos reales como tarjetas interactivas 3D con ritmo visual armónico
+const ALL_COLLAGE_CARDS: CollageCard[] = ALL_PHOTOS.map((photo, index) => {
+  let aspect: 'tall' | 'square' | 'wide' = 'square';
+  if (index % 6 === 0 || index % 6 === 5) {
+    aspect = 'tall';
+  } else if (index % 6 === 4) {
+    aspect = 'wide';
+  } else {
+    aspect = 'square';
+  }
+
+  return {
+    id: photo.id,
+    photoIndex: index,
+    image: photo.image,
+    title: photo.title,
+    place: photo.tag,
+    hiddenNote: photo.caption,
+    aspect,
+  };
+});
+
+const TRIVIA_QUESTIONS: TriviaQuestion[] = [
   {
     id: 1,
-    image: 'aventuras/foto1.jpeg',
-    title: 'Serranía del Hornocal',
-    place: 'Jujuy · 4350 m',
-    hiddenNote: 'Hechos bolsa por el viento que nos liquidó, pero nos tocó un día con sol hermoso y esa vista imponente de los 14 Colores.',
-    aspect: 'tall',
+    question: '¿Qué comió Florcita con las manos por primera vez en el auto cerca de Chango Más?',
+    options: [
+      'Un súper lomito del carrito (¡y Toti le sacó foto riéndose!)',
+      'Una pizza de muzzarella al molde',
+      'Un cuarto de helado de dulce de leche',
+    ],
+    correctIndex: 0,
+    explanation: '¡El lomito del carrito! Te cuidás un montón con la comida pero conmigo me acompañás en todo. Verte comer con la mano fue un momento único y hermoso.',
   },
   {
     id: 2,
-    image: 'aventuras/foto8.jpeg',
-    title: 'Duque al atardecer',
-    place: 'Tardes de plaza',
-    hiddenNote: 'Nuestro compañero fiel posando en el banco de la plaza. Duque es parte inseparable de nuestras sonrisas.',
-    aspect: 'square',
+    question: '¿Quién cocinó unos ñoquis caseros que fueron como una nube de tan livianitos?',
+    options: [
+      'Toti probando ser chef italiano',
+      'Florcita, la mejor cocinera del universo (¡Toti se bajó 3 platos!)',
+      'Pedimos delivery a una casa de pastas',
+    ],
+    correctIndex: 1,
+    explanation: '¡Florcita! Esos ñoquis estaban tan suaves y livianitos que parecían una nube en el paladar... ¡imposible no comerse tres platos enteros!',
   },
   {
     id: 3,
-    image: 'aventuras/foto12.jpeg',
-    title: 'Paz en las Salinas',
-    place: 'Salinas Grandes',
-    hiddenNote: 'Caminando de la mano junto a los piletones de agua turquesa en el infinito blanco. Un recuerdo inolvidable.',
-    aspect: 'tall',
+    question: '¿A qué recital fuimos a cantar a todo pulmón bajo el confeti gracias a unas entradas ganadas en la chamba?',
+    options: [
+      'Recital de Emanero',
+      'Show de Miranda',
+      'Festival de Los Tekis',
+    ],
+    correctIndex: 0,
+    explanation: '¡Emanero! Gané esas entradas en la chamba y la pasamos increíble cantando entre la multitud bajo una lluvia mágica de papelitos.',
   },
   {
     id: 4,
-    image: 'aventuras/foto4.jpeg',
-    title: 'Ceremonia de la Pachamama',
-    place: 'En casa',
-    hiddenNote: 'Con Duque a nuestro lado. La primera vez que Flor participó y que mi familia sumó a alguien tan especial al ritual de agradecimiento.',
-    aspect: 'square',
+    question: '¿Cómo se lookeó la Duque para ver y alentar a la Selección en el Mundial?',
+    options: [
+      'De smoking y moñito',
+      'Con la camiseta argentina y piluso albiceleste',
+      'Con un buzo verde agua',
+    ],
+    correctIndex: 1,
+    explanation: '¡Camiseta y piluso de la Selección! Duque es el hincha n°1 de nuestra familia y no se pierde ningún partido.',
   },
   {
     id: 5,
-    image: 'aventuras/foto5.jpeg',
-    title: 'Festejo en El Poso',
-    place: 'Noche especial',
-    hiddenNote: 'Salimos de lo común para celebrar, comimos riquísimo y compartimos una noche mágica a la luz de las velitas.',
-    aspect: 'wide',
+    question: '¿Qué actividad artística e inédita hicimos juntos por primera vez en la Quebrada?',
+    options: [
+      'Hacer stickers / stinker personalizados juntos',
+      'Pintar un cuadro al óleo',
+      'Tirarnos en tirolesa',
+    ],
+    correctIndex: 0,
+    explanation: '¡Hicimos stickers juntos por primera vez! Me hizo tan feliz verte concentrada, contenta y compartiendo algo tan creativo de a dos.',
   },
   {
     id: 6,
-    image: 'aventuras/foto7.jpeg',
-    title: 'Recital de Emanero',
-    place: 'Música & Confeti',
-    hiddenNote: 'Gané unas entradas en la chamba y la pasamos increíble cantando entre la multitud bajo una lluvia de papelitos.',
-    aspect: 'tall',
+    question: 'Cuando tenemos una discusión y Flor se queda muda... ¿qué es lo que siempre hacemos?',
+    options: [
+      'Toti se enoja y no nos hablamos en tres días',
+      'Lo hablamos desde el corazón, nos arreglamos y salimos más unidos',
+      'Tiramos una moneda a ver quién tiene la culpa',
+    ],
+    correctIndex: 1,
+    explanation: '¡Lo hablamos y lo superamos juntos! A veces me enojo cuando te quedás calladita jaja, pero siempre lo hablamos desde el corazón, nos arreglamos y salimos más fuertes. Es hermoso construir esto juntos.',
+  },
+];
+
+const LOVE_COUPONS: LoveCoupon[] = [
+  {
+    id: 1,
+    icon: '💆‍♀️',
+    title: 'Vale por un masaje relajante de pies por Toti',
+    subtitle: 'RELAX TOTAL',
+    description: 'Válido para cuando llegues cansada de la guardia o después de un día largo. 30 minutos de mimos garantizados.',
+    terms: 'Vencimiento: Sin límite de fecha · Canjeable ilimitadas veces',
+    whatsappText: '¡Hola mi amor! Canjeo mi cupón de aniversario: Vale por un masaje relajante de pies por Toti 💆‍♀️♡ ¡Prepará los aceites!',
   },
   {
-    id: 7,
-    image: 'aventuras/foto22.jpeg',
-    title: 'Termas de Reyes con frío y neblina',
-    place: 'Termas de Reyes',
-    hiddenNote: 'Hacía muchísimo frío y estaba todo con neblina, pero fue re lindo. Nos acordamos de la segunda vez que nos vimos, que estuvo así también.',
-    aspect: 'square',
+    id: 2,
+    icon: '🍝',
+    title: 'Vale por una noche de tus pastas favoritas',
+    subtitle: 'NOCHE GOURMET',
+    description: 'Un platazo de pastas delicioso (o los famosos ñoquis nube), copita de vino y Toti se encarga de lavar todos los platos.',
+    terms: 'Vencimiento: Sin vencimiento · Flor solo se sienta a disfrutar',
+    whatsappText: '¡Hola Toti! Vengo a canjear mi cupón oficial: Vale por una noche de pastas favoritas 🍝 ¡Y acordate que vos lavás los platos!',
   },
   {
-    id: 8,
-    image: 'aventuras/foto25.jpeg',
-    title: 'Ñoquis como una nube',
-    place: 'Cocinando con amor',
-    hiddenNote: 'Flor cocinó unos ñoquis caseros que fueron como una nube de tan livianitos... ¡me comí tres platos!',
-    aspect: 'tall',
+    id: 3,
+    icon: '🎲',
+    title: 'Vale por una tarde maratónica de juegos de mesa',
+    subtitle: 'DIVERSIÓN DE A DOS',
+    description: 'Flor elige el juego de mesa, pone la música y elige merienda con mates y risas garantizadas.',
+    terms: 'Prohibido picarse si alguien pierde',
+    whatsappText: '¡Hola amor! Canjeo mi cupón de juegos de mesa 🎲 Hoy me toca ganar a mí, andá preparando los mates!',
+  },
+  {
+    id: 4,
+    icon: '🥪',
+    title: 'Vale por una salida al carrito o comida sin culpa',
+    subtitle: 'PERMITIDO ESPECIAL',
+    description: 'Válido para comer un súper lomito con la mano cerca de Chango Más o donde quieras, sin contar calorías.',
+    terms: 'Obligatorio comer con la mano y reírse mucho',
+    whatsappText: '¡Hola Toti! Canjeo mi cupón del lomito del carrito 🥪 Hoy rompemos la dieta juntos!',
+  },
+  {
+    id: 5,
+    icon: '🫂',
+    title: 'Vale por un abrazo infinito anti-mudez',
+    subtitle: 'AMOR INCONDICIONAL',
+    description: 'Válido para esos momentos en los que cueste hablar. Un abrazo apretado hasta que vuelva la sonrisa y el corazón se calme.',
+    terms: 'Cura garantizada para cualquier momento difícil',
+    whatsappText: '¡Hola mi vida! Canjeo mi cupón de abrazo infinito anti-mudez 🫂 Te amo muchísimo.',
+  },
+  {
+    id: 6,
+    icon: '🚗',
+    title: 'Vale por un viaje sorpresa a cualquier cerro de Jujuy',
+    subtitle: 'NUEVA AVENTURA',
+    description: 'Vos elegís el destino: Purmamarca, Salinas, Reyes o donde se te ocurra. Cargamos el termo y partimos.',
+    terms: 'Incluye fotos locas y besos con viento',
+    whatsappText: '¡Hola mi amor! Canjeo mi cupón de viaje sorpresa por Jujuy 🚗 ¿Cuándo salimos?',
   },
 ];
 
@@ -776,6 +880,46 @@ export default function Anniversary() {
     setCurrentPhotoIndex(prev => (prev - 1 + ALL_PHOTOS.length) % ALL_PHOTOS.length);
   };
 
+  // Estado para el collage dinámico de tarjetas 3D
+  const [visibleCollageCount, setVisibleCollageCount] = useState<number>(12);
+
+  // Estado para el mini-juego interactivo (Trivia & Cupones)
+  const [gameTab, setGameTab] = useState<'trivia' | 'coupons'>('trivia');
+  const [triviaIndex, setTriviaIndex] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [triviaAnswers, setTriviaAnswers] = useState<Record<number, number>>({});
+  const [triviaFinished, setTriviaFinished] = useState<boolean>(false);
+
+  const handleSelectOption = (optionIndex: number) => {
+    if (selectedOption !== null) return;
+    setSelectedOption(optionIndex);
+    setTriviaAnswers(prev => ({ ...prev, [triviaIndex]: optionIndex }));
+    if (optionIndex === TRIVIA_QUESTIONS[triviaIndex].correctIndex) {
+      triggerHearts();
+    }
+  };
+
+  const nextTriviaQuestion = () => {
+    if (triviaIndex < TRIVIA_QUESTIONS.length - 1) {
+      setTriviaIndex(prev => prev + 1);
+      setSelectedOption(null);
+    } else {
+      setTriviaFinished(true);
+      triggerHearts();
+    }
+  };
+
+  const restartTrivia = () => {
+    setTriviaIndex(0);
+    setSelectedOption(null);
+    setTriviaAnswers({});
+    setTriviaFinished(false);
+  };
+
+  const correctTriviaCount = Object.entries(triviaAnswers).filter(
+    ([qIdx, ansIdx]) => TRIVIA_QUESTIONS[Number(qIdx)]?.correctIndex === ansIdx
+  ).length;
+
   const whatsappMessage = encodeURIComponent(
     '¡Mi amor! Me encantó toda la sorpresa de aniversario con nuestros videos, el collage y todas nuestras fotos... Gracias por recordar cada detalle, te amo con todo mi corazón ❤️✨'
   );
@@ -905,7 +1049,7 @@ export default function Anniversary() {
 
           <button
             className="hero-scroll-btn"
-            onClick={() => document.getElementById('linea-de-tiempo')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('collage-destacado')?.scrollIntoView({ behavior: 'smooth' })}
           >
             <span>Deslizá para revivirlo</span>
             <motion.div
@@ -939,20 +1083,20 @@ export default function Anniversary() {
       {/* =========================================================
           SECCIÓN 2: EL MEJOR COLLAGE & PASAJE DE FOTOS (SLIDESHOW LUXE)
       ========================================================= */}
-      <section className="section-gallery">
+      <section id="collage-destacado" className="section-gallery">
         <div className="section-header-editorial">
           <span className="editorial-tag">CAPÍTULO I</span>
           <h2 className="editorial-title">
             Collage de instantes <em className="editorial-italic">únicos</em>
           </h2>
           <p className="editorial-lead">
-            Tocá cualquier foto para girarla y leer su dedicatoria secreta, o deslizá en el pasaje de fotos.
+            Tocá cualquier tarjeta para girarla y leer su dedicatoria secreta, o tocala en "Ver en grande" para apreciarla en pantalla completa.
           </p>
         </div>
 
-        {/* Mosaico interactivo 3D con las mejores fotos */}
+        {/* Mosaico interactivo 3D con todas las fotos */}
         <div className="gallery-mosaic-grid">
-          {FEATURED_COLLAGE.map((item) => {
+          {ALL_COLLAGE_CARDS.slice(0, visibleCollageCount).map((item) => {
             const isFlipped = !!flippedCards[item.id];
             return (
               <div
@@ -968,6 +1112,22 @@ export default function Anniversary() {
                       className="mosaic-img"
                       loading="lazy"
                     />
+
+                    {/* Botón directo para ver en grande */}
+                    <button
+                      type="button"
+                      className="mosaic-expand-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openAlbumAt(item.photoIndex);
+                      }}
+                      title="Ver foto en grande"
+                      aria-label="Ver foto en tamaño completo"
+                    >
+                      <Maximize2 size={12} />
+                      <span>Ver en grande</span>
+                    </button>
+
                     <div className="mosaic-front-overlay">
                       <span className="mosaic-place">{item.place}</span>
                       <h4 className="mosaic-title">{item.title}</h4>
@@ -982,6 +1142,19 @@ export default function Anniversary() {
                       <Heart size={20} className="back-heart-icon" />
                       <span className="back-tag">{item.place}</span>
                       <p className="back-note">"{item.hiddenNote}"</p>
+
+                      <button
+                        type="button"
+                        className="back-zoom-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openAlbumAt(item.photoIndex);
+                        }}
+                      >
+                        <Maximize2 size={12} />
+                        <span>Ver foto en grande</span>
+                      </button>
+
                       <span className="back-return-hint">
                         <RotateCw size={11} /> Volver a ver foto
                       </span>
@@ -991,6 +1164,42 @@ export default function Anniversary() {
               </div>
             );
           })}
+        </div>
+
+        {/* Controles de expansión del collage */}
+        <div className="collage-expand-controls">
+          <span className="collage-count-pill">
+            Mostrando {Math.min(visibleCollageCount, ALL_COLLAGE_CARDS.length)} de {ALL_COLLAGE_CARDS.length} recuerdos en tarjetas 3D
+          </span>
+          <div className="collage-btn-row">
+            {visibleCollageCount < ALL_COLLAGE_CARDS.length ? (
+              <>
+                <button
+                  type="button"
+                  className="collage-action-btn primary"
+                  onClick={() => setVisibleCollageCount(prev => Math.min(prev + 12, ALL_COLLAGE_CARDS.length))}
+                >
+                  <Sparkles size={14} />
+                  <span>Cargar 12 fotos más</span>
+                </button>
+                <button
+                  type="button"
+                  className="collage-action-btn secondary"
+                  onClick={() => setVisibleCollageCount(ALL_COLLAGE_CARDS.length)}
+                >
+                  <span>Ver todas las 51 tarjetas</span>
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className="collage-action-btn secondary"
+                onClick={() => setVisibleCollageCount(12)}
+              >
+                <span>Mostrar menos fotos (12)</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Pasaje de fotos cinemático interactivo (Slideshow Showcase) */}
@@ -1268,7 +1477,195 @@ export default function Anniversary() {
       </section>
 
       {/* =========================================================
-          SECCIÓN 5: EL CIERRE (Nuestra Canción y Mensaje Final)
+          SECCIÓN 5: CAPÍTULO IV · EL JUEGO DE NOSOTROS DOS (TRIVIA & CUPONES)
+      ========================================================= */}
+      <section id="juego-de-pareja" className="section-game">
+        <div className="section-header-editorial">
+          <span className="editorial-tag">CAPÍTULO IV</span>
+          <h2 className="editorial-title">
+            El juego de mesa de <em className="editorial-italic">nosotros dos</em>
+          </h2>
+          <p className="editorial-lead">
+            Porque amo con el alma cuando jugamos juntos y nos reímos de nuestras locuras. ¿Cuánto conocés de nuestras aventuras?
+          </p>
+        </div>
+
+        {/* Selector de modo de juego */}
+        <div className="game-tabs-bar">
+          <button
+            type="button"
+            className={`game-tab-btn ${gameTab === 'trivia' ? 'is-active' : ''}`}
+            onClick={() => setGameTab('trivia')}
+          >
+            <Dices size={16} />
+            <span>Trivia de Pareja</span>
+          </button>
+          <button
+            type="button"
+            className={`game-tab-btn ${gameTab === 'coupons' ? 'is-active' : ''}`}
+            onClick={() => setGameTab('coupons')}
+          >
+            <Gift size={16} />
+            <span>Cupones de Amor</span>
+          </button>
+        </div>
+
+        {gameTab === 'trivia' ? (
+          <div className="trivia-card-container">
+            {!triviaFinished ? (
+              <div className="trivia-interactive-box">
+                <div className="trivia-progress-header">
+                  <span className="trivia-step-pill">
+                    Pregunta {triviaIndex + 1} de {TRIVIA_QUESTIONS.length}
+                  </span>
+                  <div className="trivia-progress-track">
+                    <div
+                      className="trivia-progress-fill"
+                      style={{
+                        width: `${((triviaIndex + 1) / TRIVIA_QUESTIONS.length) * 100}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <h3 className="trivia-question-text">
+                  {TRIVIA_QUESTIONS[triviaIndex].question}
+                </h3>
+
+                <div className="trivia-options-list">
+                  {TRIVIA_QUESTIONS[triviaIndex].options.map((opt, optIdx) => {
+                    const isSelected = selectedOption === optIdx;
+                    const isCorrect = optIdx === TRIVIA_QUESTIONS[triviaIndex].correctIndex;
+                    let optionStatusClass = '';
+                    if (selectedOption !== null) {
+                      if (isCorrect) optionStatusClass = 'is-correct';
+                      else if (isSelected) optionStatusClass = 'is-wrong';
+                    }
+
+                    return (
+                      <button
+                        key={optIdx}
+                        type="button"
+                        className={`trivia-option-btn ${optionStatusClass}`}
+                        onClick={() => handleSelectOption(optIdx)}
+                        disabled={selectedOption !== null}
+                      >
+                        <span className="option-letter">
+                          {String.fromCharCode(65 + optIdx)}
+                        </span>
+                        <span className="option-label">{opt}</span>
+                        {selectedOption !== null && isCorrect && (
+                          <CheckCircle2 size={16} className="correct-icon" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {selectedOption !== null && (
+                  <motion.div
+                    className={`trivia-feedback-box ${
+                      selectedOption === TRIVIA_QUESTIONS[triviaIndex].correctIndex
+                        ? 'feedback-correct'
+                        : 'feedback-wrong'
+                    }`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <p className="feedback-message">
+                      {selectedOption === TRIVIA_QUESTIONS[triviaIndex].correctIndex
+                        ? '🎉 ¡Exacto, mi amor!'
+                        : '💡 ¡Casi! La historia real fue:'}
+                    </p>
+                    <p className="feedback-explanation">
+                      {TRIVIA_QUESTIONS[triviaIndex].explanation}
+                    </p>
+
+                    <button
+                      type="button"
+                      className="trivia-next-btn"
+                      onClick={nextTriviaQuestion}
+                    >
+                      <span>
+                        {triviaIndex < TRIVIA_QUESTIONS.length - 1
+                          ? 'Siguiente pregunta'
+                          : 'Ver resultado final'}
+                      </span>
+                      <ArrowRight size={15} />
+                    </button>
+                  </motion.div>
+                )}
+              </div>
+            ) : (
+              <motion.div
+                className="trivia-results-card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <div className="trivia-trophy-icon">
+                  <Trophy size={48} />
+                </div>
+                <span className="results-badge">¡DESAFÍO COMPLETADO!</span>
+                <h3 className="results-title">
+                  Acertaste {correctTriviaCount} de {TRIVIA_QUESTIONS.length} preguntas
+                </h3>
+                <p className="results-desc">
+                  Florcita hermosa, sos la mujer de mi vida. Me encanta recordar cada viaje, cada anécdota, los ñoquis livianitos, el lomito con la mano y cómo nos arreglamos hablando desde el corazón. ¡Te amo con el alma!
+                </p>
+
+                <div className="results-actions">
+                  <button
+                    type="button"
+                    className="trivia-btn-restart"
+                    onClick={restartTrivia}
+                  >
+                    <RotateCw size={15} />
+                    <span>Jugar otra vez</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="trivia-btn-coupons"
+                    onClick={() => setGameTab('coupons')}
+                  >
+                    <Gift size={15} />
+                    <span>Ver mis Cupones de Amor</span>
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        ) : (
+          <div className="coupons-grid">
+            {LOVE_COUPONS.map((coupon) => (
+              <div key={coupon.id} className="coupon-ticket-card">
+                <div className="coupon-ticket-notch notch-left" />
+                <div className="coupon-ticket-notch notch-right" />
+                <div className="coupon-header">
+                  <span className="coupon-icon">{coupon.icon}</span>
+                  <span className="coupon-subtitle">{coupon.subtitle}</span>
+                </div>
+                <h4 className="coupon-title">{coupon.title}</h4>
+                <p className="coupon-desc">{coupon.description}</p>
+                <span className="coupon-terms">{coupon.terms}</span>
+
+                <a
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(coupon.whatsappText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="coupon-redeem-btn"
+                  onClick={triggerHearts}
+                >
+                  <MessageCircle size={15} />
+                  <span>Canjear por WhatsApp a Toti</span>
+                </a>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* =========================================================
+          SECCIÓN 6: CAPÍTULO V · EL CIERRE (Nuestra Canción y Mensaje Final)
       ========================================================= */}
       <section className="section-letter-closing">
         <div className="letter-wrapper">
