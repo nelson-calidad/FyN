@@ -233,7 +233,7 @@ const ALL_PHOTOS = [
   {
     id: 29,
     image: 'aventuras/foto29.jpeg',
-    title: 'Florcita hermosa en Lobo',
+    title: 'Flor hermosa en Lobo',
     tag: 'NOCHE EN EL BAR',
     caption: 'Flor radiante y sonriente esperando la comida en la cancha de Lobo.',
   },
@@ -428,7 +428,6 @@ interface CollageCard {
   title: string;
   place: string;
   hiddenNote: string;
-  aspect: 'tall' | 'square' | 'wide';
 }
 
 interface TriviaQuestion {
@@ -530,17 +529,8 @@ const VIDEO_MEMORIES: VideoMemory[] = [
   },
 ];
 
-// Las 51 fotos reales como tarjetas interactivas 3D con ritmo visual armónico
+// Las 51 fotos reales como tarjetas interactivas 3D con armonía visual total
 const ALL_COLLAGE_CARDS: CollageCard[] = ALL_PHOTOS.map((photo, index) => {
-  let aspect: 'tall' | 'square' | 'wide' = 'square';
-  if (index % 6 === 0 || index % 6 === 5) {
-    aspect = 'tall';
-  } else if (index % 6 === 4) {
-    aspect = 'wide';
-  } else {
-    aspect = 'square';
-  }
-
   return {
     id: photo.id,
     photoIndex: index,
@@ -548,32 +538,31 @@ const ALL_COLLAGE_CARDS: CollageCard[] = ALL_PHOTOS.map((photo, index) => {
     title: photo.title,
     place: photo.tag,
     hiddenNote: photo.caption,
-    aspect,
   };
 });
 
 const TRIVIA_QUESTIONS: TriviaQuestion[] = [
   {
     id: 1,
-    question: '¿Qué comió Florcita con las manos por primera vez en el auto cerca de Chango Más?',
+    question: '¿Qué comió Flor con las manos por primera vez en el auto cerca de Chango Más?',
     options: [
       'Un súper lomito del carrito (¡y Toti le sacó foto riéndose!)',
       'Una pizza de muzzarella al molde',
       'Un cuarto de helado de dulce de leche',
     ],
     correctIndex: 0,
-    explanation: '¡El lomito del carrito! Te cuidás un montón con la comida pero conmigo me acompañás en todo. Verte comer con la mano fue un momento único y hermoso.',
+    explanation: '¡El lomito del carrito! Flor siempre se cuida con la comida pero conmigo me acompaña en todo. Verte comer con la mano fue un momento único y hermoso.',
   },
   {
     id: 2,
     question: '¿Quién cocinó unos ñoquis caseros que fueron como una nube de tan livianitos?',
     options: [
       'Toti probando ser chef italiano',
-      'Florcita, la mejor cocinera del universo (¡Toti se bajó 3 platos!)',
+      'Flor (Lihue), la mejor cocinera del universo (¡Toti se bajó 3 platos!)',
       'Pedimos delivery a una casa de pastas',
     ],
     correctIndex: 1,
-    explanation: '¡Florcita! Esos ñoquis estaban tan suaves y livianitos que parecían una nube en el paladar... ¡imposible no comerse tres platos enteros!',
+    explanation: '¡Flor! Esos ñoquis estaban tan suaves y livianitos que parecían una nube en el paladar... ¡imposible no comerse tres platos enteros!',
   },
   {
     id: 3,
@@ -1101,7 +1090,7 @@ export default function Anniversary() {
             return (
               <div
                 key={item.id}
-                className={`mosaic-card-wrapper aspect-${item.aspect}`}
+                className="mosaic-card-wrapper"
                 onClick={() => toggleCardFlip(item.id)}
               >
                 <div className={`mosaic-card-inner ${isFlipped ? 'is-flipped' : ''}`}>
@@ -1610,7 +1599,7 @@ export default function Anniversary() {
                   Acertaste {correctTriviaCount} de {TRIVIA_QUESTIONS.length} preguntas
                 </h3>
                 <p className="results-desc">
-                  Florcita hermosa, sos la mujer de mi vida. Me encanta recordar cada viaje, cada anécdota, los ñoquis livianitos, el lomito con la mano y cómo nos arreglamos hablando desde el corazón. ¡Te amo con el alma!
+                  Flor hermosa (Lihue), sos la mujer de mi vida. Me encanta recordar cada viaje, cada anécdota, los ñoquis livianitos, el lomito con la mano y cómo nos arreglamos hablando desde el corazón. ¡Te amo con el alma!
                 </p>
 
                 <div className="results-actions">
@@ -1675,7 +1664,7 @@ export default function Anniversary() {
 
           <div className="letter-inner-paper">
             <span className="letter-date-heading">20 DE SEPTIEMBRE DE 2026</span>
-            <h2 className="letter-recipient">Para mi Flor hermosa,</h2>
+            <h2 className="letter-recipient">Para mi Flor Lihue hermosa,</h2>
 
             <div className="letter-paragraphs">
               <p>
