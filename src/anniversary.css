@@ -134,7 +134,7 @@
   width: 4px;
   height: 4px;
   background: var(--c-gold-light);
-  border-radius: 50%;
+  border-radius: 999px;
 }
 
 .header-note {
@@ -180,6 +180,48 @@
   }
   .months-frame {
     height: calc(100vh - 62px);
+  }
+
+  .floating-music-pill {
+    top: auto;
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .music-btn {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    justify-content: center;
+    box-shadow: 0 8px 26px rgba(31, 54, 45, 0.2);
+  }
+
+  .music-btn .song-title,
+  .music-btn > svg:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    justify-content: center;
+    padding: 0 8px;
+  }
+
+  .wordmark {
+    display: none;
+  }
+
+  .chapter-nav {
+    width: 100%;
+    max-width: 355px;
+    justify-content: center;
+  }
+
+  .chapter-nav a {
+    flex: 1;
+    justify-content: center;
+    padding: 7px 5px;
   }
 }
 
@@ -2234,7 +2276,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 10px;
 }
 
 .album-modal-backdrop {
@@ -2249,23 +2291,27 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 520px;
-  max-height: 92vh;
+  height: calc(100dvh - 20px);
+  max-width: none;
+  max-height: none;
   display: flex;
   flex-direction: column;
-  background: var(--c-paper);
-  border: 1px solid var(--c-border-gold);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
 }
 
 .album-modal-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--c-border);
+  justify-content: flex-end;
+  padding: 0;
+  border: 0;
 }
 
 .album-modal-title-box {
@@ -2291,12 +2337,19 @@
 }
 
 .album-close-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--c-border);
-  background: var(--c-bg);
-  color: var(--c-ink);
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: 12px;
+  z-index: 10;
+  width: auto;
+  min-width: 82px;
+  height: 44px;
+  padding: 0 16px;
+  gap: 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(15, 26, 21, 0.78);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2306,8 +2359,8 @@
 .album-modal-stage {
   position: relative;
   width: 100%;
-  height: 52vh;
-  background: #111A16;
+  height: 100%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2323,8 +2376,8 @@
 }
 
 .album-modal-img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 

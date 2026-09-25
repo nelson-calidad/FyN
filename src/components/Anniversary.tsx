@@ -1638,7 +1638,7 @@ export default function Anniversary() {
                 <span className="coupon-terms">{coupon.terms}</span>
 
                 <a
-                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(coupon.whatsappText)}`}
+                  href={`https://wa.me/5493884043875?text=${encodeURIComponent(coupon.whatsappText)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="coupon-redeem-btn"
@@ -1714,7 +1714,7 @@ export default function Anniversary() {
         {/* Botón interactivo de WhatsApp directo */}
         <div className="final-cta-container">
           <a
-            href={`https://api.whatsapp.com/send?text=${whatsappMessage}`}
+            href={`https://wa.me/5493884043875?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="whatsapp-love-btn"
@@ -1743,32 +1743,19 @@ export default function Anniversary() {
           >
             <div className="album-modal-backdrop" onClick={() => setAlbumOpen(false)} />
 
-            <div className="album-modal-container">
+            <div className="album-modal-container" role="dialog" aria-modal="true" aria-label="Foto en grande">
               <div className="album-modal-header">
-                <div className="album-modal-title-box">
-                  <span className="album-counter-pill">
-                    {currentPhotoIndex + 1} / {ALL_PHOTOS.length}
-                  </span>
-                  <h3>{ALL_PHOTOS[currentPhotoIndex].title}</h3>
-                </div>
                 <button
                   className="album-close-btn"
                   onClick={() => setAlbumOpen(false)}
                   aria-label="Cerrar álbum"
                 >
-                  <X size={20} />
+                  <X size={18} />
+                  <span>Salir</span>
                 </button>
               </div>
 
               <div className="album-modal-stage">
-                <button
-                  className="album-nav-arrow arrow-left"
-                  onClick={prevPhoto}
-                  aria-label="Foto anterior"
-                >
-                  <ChevronLeft size={24} />
-                </button>
-
                 <div className="album-photo-frame">
                   <motion.img
                     key={currentPhotoIndex}
@@ -1781,27 +1768,6 @@ export default function Anniversary() {
                     transition={{ duration: 0.25 }}
                   />
                 </div>
-
-                <button
-                  className="album-nav-arrow arrow-right"
-                  onClick={nextPhoto}
-                  aria-label="Foto siguiente"
-                >
-                  <ChevronRight size={24} />
-                </button>
-              </div>
-
-              {/* Tira de miniaturas deslizable */}
-              <div className="album-thumbnails-strip">
-                {ALL_PHOTOS.map((photo, idx) => (
-                  <button
-                    key={photo.id}
-                    className={`thumb-btn ${idx === currentPhotoIndex ? 'is-active' : ''}`}
-                    onClick={() => setCurrentPhotoIndex(idx)}
-                  >
-                    <img src={`${base}${photo.image}`} alt="" loading="lazy" />
-                  </button>
-                ))}
               </div>
             </div>
           </motion.div>
